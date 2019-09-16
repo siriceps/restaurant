@@ -47,6 +47,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=120, db_index=True, blank=True)
     last_name = models.CharField(max_length=120, db_index=True, blank=True)
     phone = models.CharField(max_length=64, null=True, blank=True, db_index=True)
+    is_admin = models.BooleanField(default=False)
     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
     username = models.CharField(
         _('username'),
@@ -67,8 +68,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
         blank=True
     )
 
-    class Meta:
-        ordering = ['username']
     token = models.CharField(max_length=32, null=True, blank=True, db_index=True)
 
     facebook_user_id = models.CharField(max_length=255, blank=True)
@@ -78,7 +77,12 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'username'
 
-
+    class Meta:
+        ordering = ['username']
+    
+    @property
+    def is_staff(self):
+        return self.is_admin
 
 
 
