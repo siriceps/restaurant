@@ -11,6 +11,34 @@ def generate_username():
     return ''.join(random.sample(string.ascii_lowercase, 6))
 
 
+class AccountManager(BaseUserManager):
+
+    def create_user(self, username, password):
+        if username is None:
+            raise ValueError('The given username must be set')
+
+        user = self.model(
+            username=username
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, password):
+        """
+        Creates and saves a superuser with the given email, date of
+        birth and password.
+        """
+
+        user = self.create_user(username, password)
+        user.is_admin = True
+        user.is_superuser = True
+        user.type = 1
+        user.save(using=self._db)
+        return user
+
+
 class Account(AbstractBaseUser, PermissionsMixin):
     TYPE = (
         (0, 'user'),
@@ -41,34 +69,16 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering = ['username']
+    token = models.CharField(max_length=32, null=True, blank=True, db_index=True)
+
+    facebook_user_id = models.CharField(max_length=255, blank=True)
+    google_user_id = models.CharField(max_length=255, blank=True)
+
+    objects = AccountManager()
+
+    USERNAME_FIELD = 'username'
 
 
-class AccountManager(BaseUserManager):
-
-    def create_user(self, username, password):
-        if username is None:
-            raise ValueError('The given username must be set')
-
-        user = self.model(
-            username=username
-        )
-
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, username, password):
-        """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
-        """
-
-        user = self.create_user(username, password)
-        user.is_admin = True
-        user.is_superuser = True
-        user.type = 1
-        user.save(using=self._db)
-        return user
 
 
 
