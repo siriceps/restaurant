@@ -1,5 +1,6 @@
 import re
 
+from django.conf import settings
 from rest_framework import serializers
 
 from ice.account.models import Account
@@ -31,3 +32,10 @@ class AccountSerializer(serializers.ModelSerializer):
             'last_name',
             'notification_count'
         )
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=255)
+    password = serializers.CharField(min_length=settings.PASSWORD_MIN)
+    is_remember = serializers.BooleanField(default=True)
+    language = serializers.CharField(max_length=24, allow_blank=True, required=False, default='en')
