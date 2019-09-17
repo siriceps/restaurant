@@ -3,6 +3,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUsernameValidator
 from django.db import models
 from django.utils import six
+from django.utils.translation import ugettext_lazy as _
 
 
 def generate_username():
