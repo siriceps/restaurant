@@ -49,6 +49,9 @@ class Account(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=120, db_index=True, blank=True)
     phone = models.CharField(max_length=64, null=True, blank=True, db_index=True)
     is_admin = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='account/%Y/%m/', null=True, blank=True)
+    level_group = models.CharField(max_length=255, blank=True, default='')
+    level_name = models.CharField(max_length=255, blank=True, default='')
     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
     username = models.CharField(
         _('username'),
