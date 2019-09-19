@@ -3,7 +3,7 @@ import re
 from django.conf import settings
 from rest_framework import serializers
 
-from ice.account.models import Account
+from swiftfood.account.models import Account
 
 
 def check_email(value):

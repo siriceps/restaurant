@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ice.account.models import Account
+from swiftfood.account.models import Account
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -71,12 +71,3 @@ class AccountCreateSerializer(serializers.ModelSerializer):
             'position',
         )
 
-    def validate_username(self, value):
-        if Account.objects.filter(username=value).exists():
-            raise serializers.ValidationError('A user with that username already exists.')
-        return value
-
-    def validate_email(self, value):
-        if value is not None and Account.objects.filter(email=value).exists():
-            raise serializers.ValidationError('selfA user with that email already exists.')
-        return value
