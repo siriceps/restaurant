@@ -2,8 +2,8 @@ from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from swiftfood.account.dashboard.serializer import AccountSerializer, AccountListSerializer, AccountCreateSerializer
-from swiftfood.account.models import Account
+from ..dashboard.serializer import AccountSerializer, AccountCreateSerializer, AccountListSerializer
+from ..models import Account
 
 
 class AccountView(viewsets.GenericViewSet):

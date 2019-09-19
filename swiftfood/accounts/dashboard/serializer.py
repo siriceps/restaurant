@@ -1,6 +1,7 @@
+from django.conf import settings
 from rest_framework import serializers
 
-from swiftfood.account.models import Account
+from ..models import Account
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -71,3 +72,15 @@ class AccountCreateSerializer(serializers.ModelSerializer):
             'position',
         )
 
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(max_length=255)
+    password = serializers.CharField(min_length=settings.PASSWORD_MIN)
+    is_remember = serializers.BooleanField(default=True)
+    language = serializers.CharField(max_length=24, allow_blank=True, required=False, default='en')
+
+    def save(self, **kwargs):
+        validated_data = dict(
+            list(self.validated_data.items()) + list(kwargs.items())
+        )
+        return self.create(validated_data)

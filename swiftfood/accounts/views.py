@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from swiftfood.account.models import Account
-from swiftfood.account.serializer import AccountSerializer
+from .models import Account
+from .serializer import AccountSerializer
 
 
 class AccountView(viewsets.GenericViewSet):

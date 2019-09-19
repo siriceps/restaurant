@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'account.Account'
+AUTH_USER_MODEL = 'accounts.Account'
 
 # Application definition
 
@@ -40,8 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_swagger',
-    'account'
-
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -117,7 +116,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
+PASSWORD_MIN = 10
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

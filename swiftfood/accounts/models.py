@@ -50,10 +50,16 @@ class Account(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=120, db_index=True, blank=True)
     last_name = models.CharField(max_length=120, db_index=True, blank=True)
     phone = models.CharField(max_length=64, null=True, blank=True, db_index=True)
-    is_admin = models.BooleanField(default=False)
     image = models.ImageField(upload_to='account/%Y/%m/', null=True, blank=True)
+
+    is_admin = models.BooleanField(default=False)
+
     level_group = models.CharField(max_length=255, blank=True, default='')
     level_name = models.CharField(max_length=255, blank=True, default='')
+
+    code = models.CharField(max_length=32, db_index=True, blank=True, null=True, default=None)  # Employee id
+    code2 = models.CharField(max_length=32, db_index=True, blank=True, null=True, default=None)  # License id
+
     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
     username = models.CharField(
         _('username'),
@@ -76,6 +82,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     token = models.CharField(max_length=32, null=True, blank=True, db_index=True)
 
+    is_force_reset_password = models.BooleanField(default=False)
+
     facebook_user_id = models.CharField(max_length=255, blank=True)
     google_user_id = models.CharField(max_length=255, blank=True)
 
@@ -85,7 +93,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering = ['username']
-    
+
     @property
     def is_staff(self):
         return self.is_admin
@@ -103,4 +111,5 @@ class PasswordHistory(models.Model):
             # Password hash upgrades shouldn't be considered password changes.
             account._password = None
             account.save(update_fields=['password'])
+
         return check_password(password, old_password, setter)
