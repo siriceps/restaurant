@@ -10,8 +10,8 @@ class AccountView(viewsets.GenericViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
-    # app = 'account'
-    # model = 'account'
+    app = 'account'
+    model = 'account'
 
     action_serializers = {
         'create': AccountCreateSerializer,
@@ -26,9 +26,12 @@ class AccountView(viewsets.GenericViewSet):
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
-        serializer = self.get_serializer(page, many=True).data
-        response = self.get_paginated_response(serializer).data
-        return Response(response)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -41,7 +44,7 @@ class AccountView(viewsets.GenericViewSet):
             account.is_subscribe = False
 
         for field in serializer.fields:
-            if field in data and field not in ['supervisor', 'department', 'position']:
+            if field in data and field:
                 setattr(account, field, data.get(field))
 
         if data.get('is_active', False):

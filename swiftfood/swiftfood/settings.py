@@ -107,7 +107,52 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_PAGINATION_CLASS': 'utils.rest_framework.pagination.CustomPagination',
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    # 'EXCEPTION_HANDLER': 'utils.rest_framework.exception.exception_handler',
+
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'TEST_REQUEST_RENDERER_CLASSES': (
+        'rest_framework.renderers.MultiPartRenderer',
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'PAGE_SIZE': 24,
+}
+
+SWAGGER_SETTINGS = {
+    'IS_ENABLE': False,
+    'SHOW_REQUEST_HEADERS': True,
+    'IS_SUPERUSER': True,
+    'VALIDATOR_URL': None,
+}
+
 LANGUAGE_CODE = 'en-us'
+LANGUAGES = (
+    ('th-th', 'Thai'),
+    ('en-us', 'English'),
+)
 
 TIME_ZONE = 'UTC'
 
@@ -116,7 +161,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-PASSWORD_MIN = 10
+PASSWORD_MIN = 4
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

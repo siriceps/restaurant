@@ -7,7 +7,6 @@ router = routers.DefaultRouter()
 
 router.register(r'', AccountView)
 
-
 urlpatterns = [
 
     path('', include(router.urls))

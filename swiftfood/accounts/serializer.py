@@ -22,7 +22,7 @@ def check_password(value):
 
 
 class AccountSerializer(serializers.ModelSerializer):
-    notification_count = serializers.SerializerMethodField()
+    # notification_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Account
@@ -31,7 +31,7 @@ class AccountSerializer(serializers.ModelSerializer):
             'email',
             'first_name',
             'last_name',
-            'notification_count'
+            # 'notification_count'
         )
 
 

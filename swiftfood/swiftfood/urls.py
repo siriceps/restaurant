@@ -3,13 +3,13 @@ from django.urls import path, include
 from rest_framework_swagger.views import get_swagger_view
 
 urlpatterns_api_user = [
-    path('api/dashboard/accounts/', include('accounts.dashboard.urls')),
+    path('accounts/', include('accounts.dashboard.urls')),
 
 ]
 
 urlpatterns_api_dashboard = [
 
-    path('api/dashboard/accounts/', include('accounts.dashboard.urls')),
+    path('dashboard/accounts/', include('accounts.dashboard.urls')),
 
 ]
 
@@ -30,3 +30,5 @@ urlpatterns = [
 ]
 
 urlpatterns += urlpatterns_api_user
+urlpatterns += urlpatterns_swagger
+urlpatterns += urlpatterns_api_dashboard
