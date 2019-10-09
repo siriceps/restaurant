@@ -1,3 +1,4 @@
+
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import check_password
@@ -48,7 +49,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
         (1, 'system_user'),
     )
 
-    date_of_birth = models.DateField(null=True, blank=True)
     first_name = models.CharField(max_length=120, db_index=True, blank=True)
     last_name = models.CharField(max_length=120, db_index=True, blank=True)
     phone = models.CharField(max_length=64, null=True, blank=True, db_index=True)

@@ -3,8 +3,8 @@ from requests import Response
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import AllowAny
 
-from swiftfood.accounts.models import Account
-from swiftfood.accounts.serializer import LoginSerializer, RegisterSerializer, RegisterModel
+from .models import Account
+from .serializer import LoginSerializer, RegisterSerializer, RegisterModel
 
 
 class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -40,9 +40,9 @@ class AccountRegister(mixins.CreateModelMixin, viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        data = serializer.is_validated_data
+        data = serializer.validated_data
 
-        if Account.objects.filter(usename=data['username']):
+        if Account.objects.filter(username=data['username']):
             return Response({'detail': 'username is exits'}, status=status.HTTP_409_CONFLICT)
         if Account.objects.filter(email=data['email']):
             return Response({'detail': 'email is exits'}, status=status.HTTP_409_CONFLICT)

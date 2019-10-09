@@ -11,12 +11,12 @@ from .models import Account, PasswordHistory
 class AccountAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'code',
+        # 'code',
         'username',
         'email',
         'first_name',
         'last_name',
-        'date_of_birth',
+
     )
 
     readonly_fields = ('user_permissions',)
@@ -69,7 +69,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ('username', 'email', 'password', 'date_of_birth')
+        fields = ('username', 'email', 'password',)
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
