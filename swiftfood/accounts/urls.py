@@ -1,15 +1,15 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import AccountView
+from .views import AccountLogin, AccountRegister
 
 router = routers.DefaultRouter()
-
-router.register(r'', AccountView)
-
-urlpatterns = router
+router.register(r'login', AccountLogin)
+router.register(r'register', AccountRegister)
 
 urlpatterns = [
+
     path('', include(router.urls)),
 
 ]
+urlpatterns += router.urls

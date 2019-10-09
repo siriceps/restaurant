@@ -31,6 +31,12 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 # Application definition
 
+AUTHENTICATION_BACKENDS = (
+    'account.authenticate.EmailModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -125,11 +131,12 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'utils.rest_framework.pagination.CustomPagination',
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
     # 'EXCEPTION_HANDLER': 'utils.rest_framework.exception.exception_handler',
 
@@ -161,7 +168,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-PASSWORD_MIN = 4
+PASSWORD_MIN = 8
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

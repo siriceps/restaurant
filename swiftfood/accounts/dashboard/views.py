@@ -1,5 +1,6 @@
 from django.utils import timezone
 from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from ..dashboard.serializer import AccountSerializer, AccountCreateSerializer, AccountListSerializer
@@ -55,4 +56,3 @@ class AccountView(viewsets.GenericViewSet):
 
         if 'is_force_reset_password' in data and data['is_force_reset_password']:
             account.force_reset_password()
-

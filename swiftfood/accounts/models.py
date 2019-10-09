@@ -47,18 +47,13 @@ class Account(AbstractBaseUser, PermissionsMixin):
         (0, 'user'),
         (1, 'system_user'),
     )
+
+    date_of_birth = models.DateField(null=True, blank=True)
     first_name = models.CharField(max_length=120, db_index=True, blank=True)
     last_name = models.CharField(max_length=120, db_index=True, blank=True)
     phone = models.CharField(max_length=64, null=True, blank=True, db_index=True)
     image = models.ImageField(upload_to='account/%Y/%m/', null=True, blank=True)
-
-    is_admin = models.BooleanField(default=False)
-
-    level_group = models.CharField(max_length=255, blank=True, default='')
-    level_name = models.CharField(max_length=255, blank=True, default='')
-
     code = models.CharField(max_length=32, db_index=True, blank=True, null=True, default=None)  # Employee id
-    code2 = models.CharField(max_length=32, db_index=True, blank=True, null=True, default=None)  # License id
 
     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
     username = models.CharField(
@@ -81,22 +76,14 @@ class Account(AbstractBaseUser, PermissionsMixin):
     )
 
     token = models.CharField(max_length=32, null=True, blank=True, db_index=True)
-
-    is_force_reset_password = models.BooleanField(default=False)
-
     facebook_user_id = models.CharField(max_length=255, blank=True)
     google_user_id = models.CharField(max_length=255, blank=True)
 
     objects = AccountManager()
-
     USERNAME_FIELD = 'username'
 
     class Meta:
         ordering = ['username']
-
-    @property
-    def is_staff(self):
-        return self.is_admin
 
 
 class PasswordHistory(models.Model):
