@@ -52,9 +52,9 @@ class Account(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=120, db_index=True, blank=True)
     last_name = models.CharField(max_length=120, db_index=True, blank=True)
     phone = models.CharField(max_length=64, null=True, blank=True, db_index=True)
-    image = models.ImageField(upload_to='account/%Y/%m/', null=True, blank=True)
+    image = models.ImageField(upload_to='accounts/%Y/%m/', null=True, blank=True)
     code = models.CharField(max_length=32, db_index=True, blank=True, null=True, default=None)  # Employee id
-
+    is_admin = models.BooleanField(default=False)
     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
     username = models.CharField(
         _('username'),
@@ -85,11 +85,12 @@ class Account(AbstractBaseUser, PermissionsMixin):
     class Meta:
         ordering = ['username']
 
-    @property
-    def is_staff(self):
-        "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
-        return self.is_admin
+    # @property
+    # def is_staff(self):
+    #     "Is the user a member of staff?"
+    #     # Simplest possible answer: All admins are staff
+    #     return self.is_admin
+
 
 class PasswordHistory(models.Model):
     account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

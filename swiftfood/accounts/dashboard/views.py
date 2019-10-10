@@ -11,7 +11,7 @@ class AccountView(viewsets.GenericViewSet):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
-    app = 'account'
+    app = 'accounts'
     model = 'account'
 
     action_serializers = {

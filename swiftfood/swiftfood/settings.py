@@ -32,7 +32,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Application definition
 
 AUTHENTICATION_BACKENDS = (
-    'account.authenticate.EmailModelBackend',
+    # 'account.authenticate.EmailModelBackend',
     'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
 )

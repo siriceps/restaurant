@@ -20,8 +20,8 @@ class AccountAdmin(admin.ModelAdmin):
 
     )
     permission_classes = (AllowAny,)
-    readonly_fields = ('user_permissions',)
-    actions = ['set_type_to_system_user', 'update']
+    # readonly_fields = ('user_permissions',)
+    # actions = ['set_type_to_system_user', 'update']
     search_fields = ['code', 'username', 'email', 'first_name', 'last_name']
 
     @staticmethod
@@ -61,22 +61,22 @@ class AccountAdmin(admin.ModelAdmin):
 #         return user
 
 
-class UserChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
-    the user, but replaces the password field with admin's
-    password hash display field.
-    """
-    password = ReadOnlyPasswordHashField()
-
-    class Meta:
-        model = Account
-        fields = ('username', 'email', 'password',)
-
-    def clean_password(self):
-        # Regardless of what the user provides, return the initial value.
-        # This is done here, rather than on the field, because the
-        # field does not have access to the initial value
-        return self.initial["password"]
+# class UserChangeForm(forms.ModelForm):
+#     """A form for updating users. Includes all the fields on
+#     the user, but replaces the password field with admin's
+#     password hash display field.
+#     """
+#     password = ReadOnlyPasswordHashField()
+#
+#     class Meta:
+#         model = Account
+#         fields = ('username', 'email', 'password',)
+#
+#     def clean_password(self):
+#         # Regardless of what the user provides, return the initial value.
+#         # This is done here, rather than on the field, because the
+#         # field does not have access to the initial value
+#         return self.initial["password"]
 
 #
 # @admin.register(PasswordHistory)

@@ -1,7 +1,6 @@
 from datetime import timezone
 
 from swiftfood import settings
-from django.contrib.auth.models import User
 from rest_framework import serializers
 
 
@@ -11,7 +10,7 @@ from .models import Account
 class LoginModel(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields ={'username', 'passwrod', 'email', }
+        fields = {'username', 'password'}
 
 
 class RegisterModel(serializers.ModelSerializer):
@@ -22,7 +21,7 @@ class RegisterModel(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(allow_blank=False, required=True)
-    password = serializers.CharField(style={'input_type': 'password'}, max_length=20,min_length=8)
+    password = serializers.CharField(style={'input_type': 'password'}, max_length=20)
 
 
 class RegisterSerializer(serializers.Serializer):
