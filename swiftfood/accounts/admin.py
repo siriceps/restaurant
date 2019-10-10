@@ -12,17 +12,19 @@ from .models import Account, PasswordHistory
 class AccountAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        # 'code',
+        'code',
         'username',
         'email',
         'first_name',
         'last_name',
+        'phone',
+        'image',
 
     )
     permission_classes = (AllowAny,)
     # readonly_fields = ('user_permissions',)
     # actions = ['set_type_to_system_user', 'update']
-    search_fields = ['code', 'username', 'email', 'first_name', 'last_name']
+    search_fields = ['code', 'username', 'email', 'first_name', 'last_name''phone', 'image']
 
     @staticmethod
     def set_type_to_system_user(self, request, queryset):

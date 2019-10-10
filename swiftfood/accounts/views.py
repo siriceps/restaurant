@@ -1,10 +1,13 @@
-from django.contrib.auth import authenticate, login
-from requests import Response
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import make_password
+from django.contrib.sessions.models import Session
 from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Account
-from .serializer import LoginSerializer, RegisterSerializer, RegisterModel
+from .serializer import LoginSerializer, RegisterSerializer, AccountRegisterSerializer
 
 
 class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -26,13 +29,6 @@ class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
         return Response({}, status=status.HTTP_201_CREATED)
 
 
-    # def get_queryset(self):
-    #     if self.request.user.is_authenticated():
-    #         return Account.objects.filter(id=self.request.user.id)
-    #     else:
-    #         return self.queryset
-
-
 class AccountRegister(mixins.CreateModelMixin, viewsets.GenericViewSet):
     queryset = Account.objects.all()
     permission_classes = (AllowAny,)
@@ -47,12 +43,33 @@ class AccountRegister(mixins.CreateModelMixin, viewsets.GenericViewSet):
             return Response({'detail': 'username is exits'}, status=status.HTTP_409_CONFLICT)
         if Account.objects.filter(email=data['email']):
             return Response({'detail': 'email is exits'}, status=status.HTTP_409_CONFLICT)
-        if data['confirm_password'] != data['password']:
+        if data['password'] != data['confirm_password']:
             return Response({'detail': 'password is not match'}, status=status.HTTP_404_NOT_FOUND)
 
         data.pop('confirm_password')
+        data['password'] = make_password(data['password'])
         data['username'] = data['username'].lower()
-        serializer = RegisterModel(data=data)
+        serializer = AccountRegisterSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status.HTTP_201_CREATED)
+
+
+class LogoutView(APIView):
+    # permission_classes = (AllowAny,)
+
+    def post(self, request):
+        account_id = request.user.id
+        session_key = request.session.session_key
+
+        logout(request)
+        Session.remove(account_id, session_key)
+        return Response(status=status.HTTP_200_OK)
+
+    def get(self, request):
+        user = request.user if request.user.is_authenticated else None
+        account_id = request.user.id
+        session_key = request.session.session_key
+        logout(request)
+        Session.remove(account_id, session_key)
+        return Response(status=status.HTTP_200_OK)

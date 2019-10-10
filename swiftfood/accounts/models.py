@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import PermissionsMixin, User
 from django.contrib.auth.validators import UnicodeUsernameValidator, ASCIIUsernameValidator
 from django.db import models
 from django.utils import six
@@ -44,17 +44,21 @@ class AccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser, PermissionsMixin):
-    TYPE = (
-        (0, 'user'),
-        (1, 'system_user'),
-    )
+    # TYPE = (
+    #     (0, 'super admin'),
+    #     (1, 'admin'),
+    #     (2, 'staff'),
+    #     (3, 'user'),
+    # )
 
     first_name = models.CharField(max_length=120, db_index=True, blank=True)
     last_name = models.CharField(max_length=120, db_index=True, blank=True)
     phone = models.CharField(max_length=64, null=True, blank=True, db_index=True)
     image = models.ImageField(upload_to='accounts/%Y/%m/', null=True, blank=True)
     code = models.CharField(max_length=32, db_index=True, blank=True, null=True, default=None)  # Employee id
-    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=True)
+    # position = models.IntegerField(choices=TYPE, default=3)
     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
     username = models.CharField(
         _('username'),
@@ -84,12 +88,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering = ['username']
-
-    # @property
-    # def is_staff(self):
-    #     "Is the user a member of staff?"
-    #     # Simplest possible answer: All admins are staff
-    #     return self.is_admin
 
 
 class PasswordHistory(models.Model):

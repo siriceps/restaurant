@@ -33,7 +33,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 
 AUTHENTICATION_BACKENDS = (
     # 'account.authenticate.EmailModelBackend',
-    'guardian.backends.ObjectPermissionBackend',
+    # 'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -174,4 +174,3 @@ PASSWORD_MIN = 8
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-#.
