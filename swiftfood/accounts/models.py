@@ -85,6 +85,11 @@ class Account(AbstractBaseUser, PermissionsMixin):
     class Meta:
         ordering = ['username']
 
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
 
 class PasswordHistory(models.Model):
     account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

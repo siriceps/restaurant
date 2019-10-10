@@ -13,14 +13,15 @@ class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = LoginSerializer
 
     def create(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return Response({'detail': 'you are login'}, status.HTTP_403_FORBIDDEN)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        data = serializer.validated_data
-        if self.request.user.is_authenticated():
-            return Account.objects.filter(id=self.request.user.id)
+        data = serializer.data
         account = authenticate(username=data['username'].strip().lower(), password=data['password'])
         if account is None:
             return Response({'detail': 'username or password does not exit'}, status=status.HTTP_404_NOT_FOUND)
+
         login(request, account)
         return Response({}, status=status.HTTP_201_CREATED)
 

@@ -3,6 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django import forms
+from rest_framework.permissions import AllowAny
 
 from .models import Account, PasswordHistory
 
@@ -18,7 +19,7 @@ class AccountAdmin(admin.ModelAdmin):
         'last_name',
 
     )
-
+    permission_classes = (AllowAny,)
     readonly_fields = ('user_permissions',)
     actions = ['set_type_to_system_user', 'update']
     search_fields = ['code', 'username', 'email', 'first_name', 'last_name']
