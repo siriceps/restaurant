@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from restaurant.swiftfood.menu.models import Menu
+
+
+@admin.register(Menu)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('categories', 'menu_name', 'price', 'menu_image')
+
