@@ -1,14 +1,14 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import MenuView
+from .views import ReviewViewSet
 
 router = routers.DefaultRouter()
-
-router.register(r'menu', MenuView)
+router.register(r'review', ReviewViewSet)
 
 urlpatterns = [
 
     path('', include(router.urls))
 
 ]
+urlpatterns += router.urls

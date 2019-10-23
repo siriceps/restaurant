@@ -5,12 +5,14 @@ from rest_framework_swagger.views import get_swagger_view
 
 urlpatterns_api_user = [
     path('accounts/', include('accounts.urls')),
+    path('menu/', include('menu.urls')),
 
 ]
 
 urlpatterns_api_dashboard = [
 
     path('dashboard/accounts/', include('accounts.dashboard.urls')),
+    path('dashboard/menu/', include('menu.dashboard.urls')),
 
 ]
 
