@@ -1,14 +1,14 @@
 from django.urls import path, include
-from rest_framework import routers
+from rest_framework.routers import DefaultRouter
 
 from .views import MenuList
 
-router = routers.DefaultRouter()
-router.register(r'list of menu', MenuList)
+router = DefaultRouter()
+router.register(r'menu', MenuList)
 
 urlpatterns = [
 
-    path('', include(router.urls))
+    # path(r'menu_list/', include(router.urls)),
+    path('', include(router.urls)),
 
 ]
-urlpatterns += router.urls

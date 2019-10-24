@@ -56,7 +56,7 @@ class AccountRegister(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
 
 class LogoutView(APIView):
-    # permission_classes = (AllowAny,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         account_id = request.user.id

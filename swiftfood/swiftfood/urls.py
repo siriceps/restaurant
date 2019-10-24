@@ -3,16 +3,20 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_swagger.views import get_swagger_view
 
+from menu.views import MenuList
+
 urlpatterns_api_user = [
-    path('accounts/', include('accounts.urls')),
-    path('menu/', include('menu.urls')),
+    path('api/accounts/', include('accounts.urls')),
+    path('api/menu/', include('menu.urls')),
+    path('api/review/', include('review.urls')),
 
 ]
 
 urlpatterns_api_dashboard = [
 
-    path('dashboard/accounts/', include('accounts.dashboard.urls')),
-    path('dashboard/menu/', include('menu.dashboard.urls')),
+    path('api/dashboard/accounts/', include('accounts.dashboard.urls')),
+    path('api/dashboard/menu/', include('menu.dashboard.urls')),
+    path('api/dashboard/review/', include('review.dashboard.urls')),
 
 ]
 
