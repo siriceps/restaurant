@@ -6,4 +6,4 @@ from .models import OrderMenu
 
 @admin.register(OrderMenu)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ('food_name',)
+    list_display = ('id', 'reference', 'amount')

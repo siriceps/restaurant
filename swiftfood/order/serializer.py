@@ -1,16 +1,21 @@
 from django.conf import settings
 from rest_framework import serializers
 
-from ice.account.models import Account
+from swiftfood.order.models import OrderMenu
 
 
-class AccountListSerializer(serializers.ModelSerializer):
+class OrderListSerializer(serializers.ModelSerializer):
 
+    # food_name = serializers. models
+    # categories =
+    # price =
     class Meta:
-        model = Account
+        model = OrderMenu
         fields = (
             'id',
-            'food_name'
+            'food_name',
+            'price',
+            'categories'
         )
 
 

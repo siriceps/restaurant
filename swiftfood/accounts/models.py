@@ -82,6 +82,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     token = models.CharField(max_length=32, null=True, blank=True, db_index=True)
     facebook_user_id = models.CharField(max_length=255, blank=True)
     google_user_id = models.CharField(max_length=255, blank=True)
+    point = models.SmallIntegerField(default=0)
 
     objects = AccountManager()
     USERNAME_FIELD = 'username'
