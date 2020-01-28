@@ -1,7 +1,7 @@
 from django.conf import settings
 from rest_framework import serializers
 
-from swiftfood.order.models import OrderMenu
+from order.models import OrderMenu
 
 
 class OrderListSerializer(serializers.ModelSerializer):
@@ -14,8 +14,9 @@ class OrderListSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'food_name',
-            'price',
-            'categories'
+            'amount',
+            # 'price',
+            # 'categories'
         )
 
 

@@ -8,7 +8,6 @@ class ReferenceListSerializer(serializers.ModelSerializer):
         model = ReferenceModel
         fields = (
             'id',
-            'menu',
-            'order_menu',
+
         )
 

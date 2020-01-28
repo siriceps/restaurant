@@ -1,7 +1,7 @@
 from django.db import models
 
-from swiftfood.menu.models import Menu
-from swiftfood.order.models import OrderMenu
+from menu.models import Menu
+from order.models import OrderMenu
 
 
 class ReferenceModel(models.Model):

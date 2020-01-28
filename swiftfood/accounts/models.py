@@ -58,7 +58,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     code = models.CharField(max_length=32, db_index=True, blank=True, null=True, default=None)  # Employee id
     is_staff = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=True)
-    # position = models.IntegerField(choices=TYPE, default=3)
+    # position = models.IntegerField(choices=, default=3)
     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
     username = models.CharField(
         _('username'),
