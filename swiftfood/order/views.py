@@ -19,18 +19,17 @@ class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    # #     request_form = serializer.save()
-    # #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     data = serializer.validated_data
-    #     # self.perform_create(serializer)
-    #     OrderMenu.objects.create(
-    #         # food_id=data['id'],
-    #         food_name=data['menu_name'],
-    #         # price=data['price'],
-    #         # menu_image=data['menu_image'],
-    #     )
-    #     headers = self.get_success_headers(serializer.data)
-    #     return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+    #     request_form = serializer.save()
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+        data = serializer.validated_data
+        # self.perform_create(serializer)
+        OrderMenu.objects.create(
+            food_menu=data['id', 'food_name', 'price'],
+            amount=data['amount'],
+
+        )
+        headers = self.get_success_headers(serializer.data)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)

@@ -13,7 +13,7 @@ class OrderListSerializer(serializers.ModelSerializer):
         model = OrderMenu
         fields = (
             'id',
-            'food_name',
+            'food_menu',
             'amount',
             # 'price',
             # 'categories'

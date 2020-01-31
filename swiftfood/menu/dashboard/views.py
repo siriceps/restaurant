@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from menu.serializer import MenuListSerializer
 from ..dashboard.serializer import MenuSerializer
 from ..models import Menu
 
@@ -11,7 +12,7 @@ class MenuView(viewsets.ModelViewSet):
 
     action_serializers = {
         'create': MenuSerializer,
-        'list': MenuSerializer,
+        'list': MenuListSerializer,
     }
 
     def create(self, request, *args, **kwargs):
@@ -29,4 +30,14 @@ class MenuView(viewsets.ModelViewSet):
         )
         headers = self.get_success_headers(serializer.data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 

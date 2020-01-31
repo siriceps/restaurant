@@ -6,7 +6,6 @@ from menu.models import Menu
 
 class OrderMenu(models.Model):
     food_menu = models.ManyToManyField(Menu)
-    # reference = models.ForeignKey(ReferenceModel, on_delete=models.CASCADE)
     amount = models.SmallIntegerField(default=1)
 
 
