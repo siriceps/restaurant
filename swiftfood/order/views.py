@@ -1,6 +1,7 @@
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
+from menu.models import Menu
 from .serializer import OrderListSerializer
 from .models import OrderMenu
 
@@ -26,8 +27,9 @@ class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet):
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
         data = serializer.validated_data
         # self.perform_create(serializer)
+
         OrderMenu.objects.create(
-            food_menu=data['id', 'food_name', 'price'],
+            food_menu=data['food_menu'],
             amount=data['amount'],
 
         )

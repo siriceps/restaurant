@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'review',
     'reference',
     'promotions',
-    'order',
+    'order'
 
 ]
 

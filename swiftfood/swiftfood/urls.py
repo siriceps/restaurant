@@ -10,6 +10,7 @@ urlpatterns_api_user = [
     path('api/menu/', include('menu.urls')),
     path('api/review/', include('review.urls')),
     path('api/order/', include('order.urls')),
+    path('api/promotions/', include('promotions.urls')),
 
 ]
 
@@ -18,6 +19,7 @@ urlpatterns_api_dashboard = [
     path('api/dashboard/accounts/', include('accounts.dashboard.urls')),
     path('api/dashboard/menu/', include('menu.dashboard.urls')),
     path('api/dashboard/review/', include('review.dashboard.urls')),
+    path('api/dashboard/promotions/', include('promotions.dashboard.urls')),
 
 ]
 
