@@ -11,6 +11,7 @@ urlpatterns_api_user = [
     path('api/review/', include('review.urls')),
     path('api/order/', include('order.urls')),
     path('api/promotions/', include('promotions.urls')),
+    path('api/reservation/', include('reservation.urls')),
 
 ]
 
@@ -20,6 +21,7 @@ urlpatterns_api_dashboard = [
     path('api/dashboard/menu/', include('menu.dashboard.urls')),
     path('api/dashboard/review/', include('review.dashboard.urls')),
     path('api/dashboard/promotions/', include('promotions.dashboard.urls')),
+    path('api/dashboard/reservation/', include('reservation.dashboard.urls')),
 
 ]
 
