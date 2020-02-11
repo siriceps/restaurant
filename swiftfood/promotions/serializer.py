@@ -11,12 +11,12 @@ class PromotionsListSerializer(serializers.ModelSerializer):
         model = Promotions
         fields = (
             'id',
-            'food_menu',
             'promotion_name',
             # 'promotion_code',
             'promotion_picture',
             'description',
             'discount',
+            'promotion_order',
         )
 
 
@@ -25,11 +25,11 @@ class PromotionsSerializer(serializers.ModelSerializer):
         model = Promotions
         fields = (
             'id',
-            'food_menu',
             'promotion_name',
             'promotion_code',
             'promotion_picture',
             'description',
             'discount',
+            'promotion_order',
         )
 

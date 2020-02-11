@@ -27,6 +27,10 @@ class MenuView(viewsets.ModelViewSet):
             menu_name=data['menu_name'],
             price=data['price'],
             # menu_image=data['menu_image'],
+            discount_price=data['discount_price'],
+            description=data['description'],
+            date_exp=data['date_exp'],
+            material=data['material'],
         )
         headers = self.get_success_headers(serializer.data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
@@ -40,4 +44,3 @@ class MenuView(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-

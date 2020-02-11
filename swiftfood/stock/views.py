@@ -1,13 +1,13 @@
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
-from reservation.models import Reservation
-from reservation.serializer import ReservationListSerializer
+from .models import Stock
+from .serializer import StockSerializer
 
 
-class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Reservation.objects.all()
-    serializer_class = ReservationListSerializer
+class StockView(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Stock.objects.all()
+    serializer_class = StockSerializer
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -26,11 +26,11 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet):
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
         data = serializer.validated_data
         # self.perform_create(serializer)
-        Reservation.objects.create(
-            queue=data['queue'],
-            amount=data['amount'],
-            datetime=data['datetime'],
-            is_confirm=data['is_confirm'],
+
+        Stock.objects.create(
+            material_name=data['material_name'],
+            amount_material=data['amount_material'],
+            material_picture=data['material_picture'],
         )
-        # headers = self.get_success_headers(serializer.data)
-        return Response(data, status=status.HTTP_201_CREATED)
+        headers = self.get_success_headers(serializer.data)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)

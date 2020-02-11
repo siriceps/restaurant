@@ -11,6 +11,8 @@ class ReservationListSerializer(serializers.ModelSerializer):
             'id',
             'amount',
             'queue',
+            'datetime',
+            'is_confirm',
         )
 
 

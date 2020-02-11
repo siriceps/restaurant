@@ -1,6 +1,6 @@
 from django.db import models
 
-from menu.models import Menu
+from order.models import OrderMenu
 
 
 class Promotions(models.Model):
@@ -9,4 +9,4 @@ class Promotions(models.Model):
     promotion_picture = models.ImageField(upload_to='promotions/%Y/%m/', null=True, blank=True)
     description = models.CharField(max_length=50, db_index=True, blank=True)
     discount = models.FloatField(default=0)
-    food_menu = models.ManyToManyField(Menu)
+    promotion_order = models.ManyToManyField(OrderMenu)
