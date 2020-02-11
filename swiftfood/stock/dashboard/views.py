@@ -1,17 +1,17 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from promotions.serializer import PromotionsSerializer, PromotionsListSerializer
-from ..models import Promotions
+from stock.dashboard.serializer import StockSerializer
+from stock.models import Stock
 
 
-class PromotionsViewAdmin(viewsets.ModelViewSet):
-    queryset = Promotions.objects.all()
-    serializer_class = PromotionsSerializer
+class StockViewAdmin(viewsets.ModelViewSet):
+    queryset = Stock.objects.all()
+    serializer_class = StockSerializer
 
     action_serializers = {
-        'create': PromotionsSerializer,
-        'list': PromotionsListSerializer,
+        'create': StockSerializer,
+        'list': StockSerializer,
     }
 
     def create(self, request, *args, **kwargs):
@@ -21,14 +21,10 @@ class PromotionsViewAdmin(viewsets.ModelViewSet):
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
         data = serializer.validated_data
         # self.perform_create(serializer)
-        Promotions.objects.create(
-            promotion_name=data['promotion_name'],
-            promotion_code=data['promotion_code'],
-            # promotion_picture=data['promotion_picture'],
-            description=data['description'],
-            discount=data['discount'],
-            food_menu=data['food_menu'],
-
+        Stock.objects.create(
+            material_name=data['material_name'],
+            amount_material=data['amount_material'],
+            # material_picture=data['material_picture'],
         )
         headers = self.get_success_headers(serializer.data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
@@ -42,4 +38,3 @@ class PromotionsViewAdmin(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-

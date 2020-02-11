@@ -23,6 +23,7 @@ urlpatterns_api_dashboard = [
     path('api/dashboard/review/', include('review.dashboard.urls')),
     path('api/dashboard/promotions/', include('promotions.dashboard.urls')),
     path('api/dashboard/reservation/', include('reservation.dashboard.urls')),
+    path('api/dashboard/stock/', include('stock.dashboard.urls')),
 
 ]
 

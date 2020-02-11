@@ -11,9 +11,9 @@ class MenuSerializer(serializers.ModelSerializer):
             'categories',
             'menu_name',
             'price',
-            'menu_image',
+            # 'menu_image',
             'discount_price',
             'description',
-            'date_exp',
-            'material',
+            # 'date_exp',
+            # 'material',
         )

@@ -29,9 +29,13 @@ class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet):
         # self.perform_create(serializer)
 
         OrderMenu.objects.create(
-            food_menu=data['food_menu'],
+            # food_menu=data['food_menu'],
             amount=data['amount'],
-
+            datetime=data['datetime'],
+            is_confirm=data['is_confirm'],
+            service_charge=data['service_charge'],
+            food_menu=data['food_menu'],
+            total=data['total'],
         )
         headers = self.get_success_headers(serializer.data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)

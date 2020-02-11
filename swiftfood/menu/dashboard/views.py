@@ -29,8 +29,8 @@ class MenuView(viewsets.ModelViewSet):
             # menu_image=data['menu_image'],
             discount_price=data['discount_price'],
             description=data['description'],
-            date_exp=data['date_exp'],
-            material=data['material'],
+            # date_exp=data['date_exp'],
+            # material=data['material'],
         )
         headers = self.get_success_headers(serializer.data)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)

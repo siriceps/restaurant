@@ -9,5 +9,6 @@ class ReservationAdmin(admin.ModelAdmin):
             'id',
             'queue',
             'amount',
-
+            'datetime',
+            'is_confirm',
     )
