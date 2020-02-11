@@ -171,6 +171,14 @@ LANGUAGES = (
 
 TIME_ZONE = 'UTC'
 
+ADMINS = (
+    ('Pawarut Samavardhana', 'sir_ice39@outlook.com'),
+    # ('Supachai Viryacharoenkit', 'bothavich@conicle.com'),
+
+)
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 USE_I18N = True
 
 USE_L10N = True

@@ -18,7 +18,7 @@ class ReservationListSerializer(serializers.ModelSerializer):
 # @staticmethod
 # def now_queue(self):
 #
-#     queue = Reservation.objects.filter(queue=queue).last()
+#     queue = Reservation.objects.filter(queue=self.queue).last()
 #     for now in queue:
 
 

@@ -35,8 +35,12 @@ urlpatterns_swagger = [
 ]
 
 urlpatterns = [
+
+    path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     url(r'^api-auth', include('rest_framework.urls')),
+
+
 ]
 
 urlpatterns += urlpatterns_api_user

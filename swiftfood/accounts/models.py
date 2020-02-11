@@ -105,3 +105,4 @@ class PasswordHistory(models.Model):
             account.save(update_fields=['password'])
 
         return check_password(password, old_password, setter)
+

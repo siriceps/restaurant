@@ -73,3 +73,4 @@ class LogoutView(APIView):
         logout(request)
         Session.remove(account_id, session_key)
         return Response(status=status.HTTP_200_OK)
+
