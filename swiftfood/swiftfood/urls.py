@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_swagger.views import get_swagger_view
 
+from accounts.view_forget_password import ConfirmPassword
 from menu.views import MenuList
 
 urlpatterns_api_user = [
@@ -13,6 +14,7 @@ urlpatterns_api_user = [
     path('api/promotions/', include('promotions.urls')),
     path('api/reservation/', include('reservation.urls')),
     path('api/stock/', include('stock.urls')),
+
 
 ]
 
@@ -39,7 +41,8 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     url(r'^api-auth', include('rest_framework.urls')),
-
+    url(r'setpassword/$', ConfirmPassword.as_view()),
+    url(r'forgetpassword/$', ConfirmPassword.as_view()),
 
 ]
 

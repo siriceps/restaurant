@@ -3,7 +3,6 @@ from datetime import timezone
 from swiftfood import settings
 from rest_framework import serializers
 
-
 from .models import Account
 
 
@@ -32,3 +31,13 @@ class RegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
     last_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
     phone = serializers.CharField(max_length=10, required=True, allow_blank=False)
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(allow_blank=False, required=True)
+    new_password = serializers.CharField(allow_blank=False, required=True, min_length=settings.PASSWORD_MIN)
+    confirm_password = serializers.CharField(allow_blank=False, required=True, min_length=settings.PASSWORD_MIN)
+
+
+class ForgetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()

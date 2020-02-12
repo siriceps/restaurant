@@ -34,22 +34,6 @@ class AccountView(viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        data = serializer.validated_data
-
-        account = Account.objects.create_user(data['username'], data['password'])
-        account.email = data.get('email', '')
-        if len(account.email) == 0:
-            account.is_subscribe = False
-
-        for field in serializer.fields:
-            if field in data and field:
-                setattr(account, field, data.get(field))
-
-        if data.get('is_active', False):
-            account.last_active = timezone.now()
-
-        account.set_password(data['password'])
-        account.save()
-
-        if 'is_force_reset_password' in data and data['is_force_reset_password']:
-            account.force_reset_password()
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

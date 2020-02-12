@@ -5,7 +5,7 @@ from reservation.models import Reservation
 from reservation.serializer import ReservationListSerializer
 
 
-class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet):
+class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin):
     queryset = Reservation.objects.all()
     serializer_class = ReservationListSerializer
 
@@ -22,15 +22,19 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-    #     request_form = serializer.save()
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        data = serializer.validated_data
-        # self.perform_create(serializer)
-        Reservation.objects.create(
-            queue=data['queue'],
-            amount=data['amount'],
-            datetime=data['datetime'],
-            is_confirm=data['is_confirm'],
-        )
-        # headers = self.get_success_headers(serializer.data)
-        return Response(data, status=status.HTTP_201_CREATED)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     data = serializer.validated_data
+    #     Reservation.objects.create(
+    #         queue=data['queue'],
+    #         amount=data['amount'],
+    #         datetime=data['datetime'],
+    #         is_confirm=data['is_confirm'],
+    #     )
+    #     # headers = self.get_success_headers(serializer.data)
+    #     return Response(data, status=status.HTTP_201_CREATED)

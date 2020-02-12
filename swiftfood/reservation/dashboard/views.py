@@ -1,7 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
-from promotions.serializer import PromotionsSerializer
 from reservation.serializer import ReservationListSerializer
 from ..models import Reservation
 

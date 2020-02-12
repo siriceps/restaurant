@@ -1,14 +1,18 @@
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
-from menu.models import Menu
-from .serializer import OrderListSerializer
 from .models import OrderMenu
+from .serializer import OrderListSerializer
 
 
-class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet):
+class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin):
     queryset = OrderMenu.objects.all()
     serializer_class = OrderListSerializer
+
+    action_serializers = {
+        'create': OrderListSerializer,
+        'list': OrderListSerializer,
+    }
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -23,19 +27,6 @@ class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-    #     request_form = serializer.save()
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        data = serializer.validated_data
-        # self.perform_create(serializer)
-
-        OrderMenu.objects.create(
-            # food_menu=data['food_menu'],
-            amount=data['amount'],
-            datetime=data['datetime'],
-            is_confirm=data['is_confirm'],
-            service_charge=data['service_charge'],
-            food_menu=data['food_menu'],
-            total=data['total'],
-        )
+        self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
