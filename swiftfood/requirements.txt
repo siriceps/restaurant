@@ -8,7 +8,7 @@ coreapi==2.3.3
 coreschema==0.0.4
 croniter==0.3.30
 DateTime==4.3
-Django==2.2.4
+Django==2.2.10
 django-celery-beat==1.5.0
 django-celery-monitor==1.1.2
 django-celery-results==1.0.4
