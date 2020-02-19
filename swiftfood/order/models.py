@@ -1,7 +1,9 @@
 from datetime import datetime
 from django.db import models
 
+from accounts.models import Account
 from menu.models import Menu
+from django.conf import settings
 
 
 class OrderMenu(models.Model):
@@ -12,4 +14,15 @@ class OrderMenu(models.Model):
     service_charge = models.SmallIntegerField(default=0)
     vat = models.FloatField(default=0)
     total = models.FloatField(default=0)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+    is_paid = models.BooleanField(default=False)
 
+    @staticmethod
+    def is_user_exists(user):
+        return OrderMenu.objects.filter(user=user).exists()
+
+    # @property
+    #     def get_food_menu(self):
+    #         food = OrderMenu.objects.filter('food_menu')
+    
+    #         food_price = food.price

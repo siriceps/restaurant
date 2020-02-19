@@ -16,6 +16,8 @@ class OrderListSerializer(serializers.ModelSerializer):
             'service_charge',
             'vat',
             'total',
+            'user',
+            'is_paid',
         )
 
 

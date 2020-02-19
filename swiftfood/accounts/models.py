@@ -110,3 +110,5 @@ class PasswordHistory(models.Model):
 class ForgetPassword(models.Model):
     token = models.CharField(max_length=64)
     account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+# class CustomUser(AbstractUser):

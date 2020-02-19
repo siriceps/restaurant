@@ -38,7 +38,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
             user=request.user
         ).first()
         headers = self.get_success_headers(serializer.data)
-        return Response(self.get_serializer(review).data, status=status.HTTP_201_CREATED,headers=headers)
+        return Response(self.get_serializer(review).data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
@@ -52,6 +52,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
 
 class Average(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Review.objects.all()
@@ -80,4 +81,3 @@ class CountReview(mixins.ListModelMixin, viewsets.GenericViewSet):
         # count_review = Review.objects.values('review_text')
         queryset = self.filter_queryset(self.get_queryset())
         return Response({'count_review': queryset.count()})
-

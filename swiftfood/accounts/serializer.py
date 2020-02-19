@@ -17,12 +17,6 @@ class AccountRegisterSerializer(serializers.ModelSerializer):
         fields = ['username', 'first_name', 'last_name', 'email', 'password']
 
 
-class LoginModel(serializers.ModelSerializer):
-    class Meta:
-        model = Account
-        fields = ['username', 'first_name', 'last_name', 'email']
-
-
 class RegisterSerializer(serializers.Serializer):
     username = serializers.CharField(allow_blank=False, required=True)
     password = serializers.CharField(min_length=settings.PASSWORD_MIN)
