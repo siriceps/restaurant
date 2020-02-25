@@ -5,7 +5,8 @@ from reservation.models import Reservation
 from reservation.serializer import ReservationListSerializer
 
 
-class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin):
+class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin,
+                      mixins.DestroyModelMixin):
     queryset = Reservation.objects.all()
     serializer_class = ReservationListSerializer
 
@@ -26,6 +27,12 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Cre
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
+    def destroy(self, request, *args, **kwargs):
+        count = self.get_object()
+        # count = Reservation.objects.filter('count').delete()
+        old_data = ReservationListSerializer(count).data
+        old_data.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     # def create(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
     #     serializer.is_valid(raise_exception=True)

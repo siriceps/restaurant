@@ -13,6 +13,7 @@ class ReservationListSerializer(serializers.ModelSerializer):
             'queue',
             'datetime',
             'is_confirm',
+            'count',
         )
 
 # @staticmethod

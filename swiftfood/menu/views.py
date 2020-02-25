@@ -1,4 +1,4 @@
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
@@ -25,5 +25,11 @@ class MenuList(mixins.ListModelMixin, viewsets.GenericViewSet):
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
+        # try:
+        #     Menu.objects.filter('material')
+        #     return Response({'detail: out of stock'},status=status.HTTP_400_BAD_REQUEST)
+        # except:
+        #     serializer = self.get_serializer(queryset, many=True)
+        #     return Response(serializer.data)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)

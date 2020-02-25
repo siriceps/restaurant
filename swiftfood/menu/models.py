@@ -13,4 +13,4 @@ class Menu(models.Model):
     discount_price = models.SmallIntegerField(default=0, blank=True)
     description = models.CharField(max_length=50, db_index=True, blank=True)
     date_exp = models.DateTimeField(default=datetime.now, blank=True, editable=False)
-    material = models.ManyToManyField(Stock)
+

@@ -21,8 +21,9 @@ class OrderMenu(models.Model):
     def is_user_exists(user):
         return OrderMenu.objects.filter(user=user).exists()
 
-    # @property
-    #     def get_food_menu(self):
-    #         food = OrderMenu.objects.filter('food_menu')
-    
-    #         food_price = food.price
+    @property
+    def get_food_menu(self):
+        total = 0
+        for i in self.food_menu:
+            total += i.price
+        return total

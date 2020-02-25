@@ -59,18 +59,22 @@ class LogoutView(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
-        account_id = request.user.id
-        session_key = request.session.session_key
+        try:
+            account_id = request.user.id
+            session_key = request.session.session_key
 
-        logout(request)
-        Session.remove(account_id, session_key)
-        return Response(status=status.HTTP_200_OK)
+            logout(request)
+            Session.remove(account_id, session_key)
+        finally:
+            return Response(status=status.HTTP_200_OK)
 
     def get(self, request):
-        user = request.user if request.user.is_authenticated else None
-        account_id = request.user.id
-        session_key = request.session.session_key
-        logout(request)
-        Session.remove(account_id, session_key)
-        return Response(status=status.HTTP_200_OK)
+        try:
+            account_id = request.user.id
+            session_key = request.session.session_key
+            logout(request)
+            Session.remove(account_id, session_key)
+        finally:
+            return Response(status=status.HTTP_200_OK)
+
 

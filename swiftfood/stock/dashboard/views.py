@@ -17,17 +17,9 @@ class StockViewAdmin(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-    #     request_form = serializer.save()
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        data = serializer.validated_data
-        # self.perform_create(serializer)
-        Stock.objects.create(
-            material_name=data['material_name'],
-            amount_material=data['amount_material'],
-            # material_picture=data['material_picture'],
-        )
+        self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
