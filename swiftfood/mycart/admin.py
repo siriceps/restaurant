@@ -8,7 +8,7 @@ from .models import MyCart
 class MyCartAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'amount',
+        'quantity',
         'datetime',
         'is_confirm',
         'service_charge',

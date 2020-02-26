@@ -12,12 +12,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Stock',
+            name='Notification',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('material_name', models.CharField(blank=True, db_index=True, max_length=50)),
-                ('amount_material', models.SmallIntegerField(default=0)),
-                ('material_picture', models.ImageField(blank=True, null=True, upload_to='stock/%Y/%m/')),
+                ('message', models.TextField(max_length=64)),
             ],
         ),
     ]

@@ -8,7 +8,7 @@ from django.conf import settings
 
 class MyCart(models.Model):
     food_menu = models.ManyToManyField(Menu)
-    amount = models.SmallIntegerField(default=1)
+    quantity = models.SmallIntegerField(default=1)
     datetime = models.DateTimeField(default=datetime.now, blank=True, editable=False)
     is_confirm = models.BooleanField(default=True)
     service_charge = models.SmallIntegerField(default=0)

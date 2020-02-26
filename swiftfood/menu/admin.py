@@ -13,6 +13,5 @@ class MenuAdmin(admin.ModelAdmin):
             'menu_image',
             'discount_price',
             'description',
-            'date_exp',
     )
 

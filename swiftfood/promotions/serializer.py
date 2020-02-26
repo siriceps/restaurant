@@ -14,4 +14,5 @@ class PromotionsListSerializer(serializers.ModelSerializer):
             'description',
             'discount',
             'promotion_order',
+            'datetime_exp'
         )

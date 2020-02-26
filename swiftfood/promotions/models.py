@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 from menu.models import Menu
@@ -11,3 +13,4 @@ class Promotions(models.Model):
     description = models.CharField(max_length=50, db_index=True, blank=True)
     discount = models.FloatField(default=0)
     promotion_order = models.ManyToManyField(Menu)
+    datetime_exp = models.DateTimeField(default=datetime.now, blank=True, editable=False)

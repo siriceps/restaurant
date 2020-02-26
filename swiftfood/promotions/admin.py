@@ -13,4 +13,5 @@ class PromotionsAdmin(admin.ModelAdmin):
             'promotion_picture',
             'description',
             'discount',
+            'datetime_exp',
     )

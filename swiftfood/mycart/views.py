@@ -15,6 +15,12 @@ class OrderMenuView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Creat
         'retrieve': MyCartSerializer,
     }
 
+    def get_serializer_class(self):
+        if hasattr(self, 'action_serializers'):
+            if self.action in self.action_serializers:
+                return self.action_serializers[self.action]
+        return super().get_serializer_class()
+
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)

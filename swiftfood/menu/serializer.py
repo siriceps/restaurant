@@ -15,6 +15,5 @@ class MenuListSerializer(serializers.ModelSerializer):
             'menu_image',
             'discount_price',
             'description',
-            'date_exp',
             'material',
         )

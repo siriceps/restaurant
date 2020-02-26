@@ -21,8 +21,8 @@ class MyCartListSerializer(serializers.ModelSerializer):
             'user'
         )
 
-    def get_user(self, review):
-        return SerializerUser(review.user).data
+    def get_user(self, mycart):
+        return SerializerUser(mycart.user).data
 
 
 class SerializerUser(serializers.ModelSerializer):
@@ -52,8 +52,8 @@ class MyCartSerializer(serializers.ModelSerializer):
             'user',
         )
 
-    def get_user(self, review):
-        return SerializerUser(review.user).data
+    def get_user(self, mycart):
+        return SerializerUser(mycart.user).data
 
     def get_vat(self):
         vat = 7 / 100
