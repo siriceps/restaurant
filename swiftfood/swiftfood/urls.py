@@ -10,7 +10,7 @@ urlpatterns_api_user = [
     path('api/accounts/', include('accounts.urls')),
     path('api/menu/', include('menu.urls')),
     path('api/review/', include('review.urls')),
-    path('api/order/', include('order.urls')),
+    path('api/mycart/', include('mycart.urls')),
     path('api/promotions/', include('promotions.urls')),
     path('api/reservation/', include('reservation.urls')),
     path('api/stock/', include('stock.urls')),

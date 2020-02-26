@@ -1,7 +1,7 @@
 from django.db import models
 
 from menu.models import Menu
-from order.models import OrderMenu
+from mycart.models import MyCart
 
 
 class Promotions(models.Model):

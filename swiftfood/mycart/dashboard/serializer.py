@@ -1,12 +1,12 @@
 from django.conf import settings
 from rest_framework import serializers
 
-from order.models import OrderMenu
+from mycart.models import MyCart
 
 
 class OrderListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrderMenu
+        model = MyCart
         fields = (
             'id',
             'food_menu',

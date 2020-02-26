@@ -1,13 +1,14 @@
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
+from accounts.models import Account
 from menu.models import Menu
-from order.models import OrderMenu
+from mycart.models import MyCart
 from .serializer import OrderListSerializer
 
 
 class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin):
-    queryset = OrderMenu.objects.all()
+    queryset = MyCart.objects.all()
     serializer_class = OrderListSerializer
 
     action_serializers = {
@@ -28,10 +29,15 @@ class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Creat
     # def create(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
     #     serializer.is_valid(raise_exception=True)
-    #
     #     data = serializer.validated_data
     #
-    #     order = OrderMenu.objects.create(
+    #
+    #     if 'account_username' in data:
+    #         account = Account.objects.filter(username=data['account_username']).first()
+    #     if account is None:
+    #         return Response({'detail': 'Account not found'}, status=status.HTTP_400_BAD_REQUEST)
+    #
+    #     mycart = OrderMenu.objects.create(
     #         food_menu=data['food_menu'],
     #         amount=data['amount'],
     #         datetime=data['datetime'],
@@ -40,6 +46,11 @@ class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Creat
     #         total=data['total'],
     #         user=request.user
     #     ).first()
-    #     price = order.object.food_menu.pice
     #     headers = self.get_success_headers(serializer.data)
-    #     return Response(self.get_serializer(order).data, status=status.HTTP_201_CREATED, headers=headers)
+    #     return Response(self.get_serializer(mycart).data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def retrieve(self, request, *args, **kwargs):
+        total = self.get_object()
+        total = total.get_food_menu
+        serializer = self.get_serializer(total)
+        return Response(serializer.data)

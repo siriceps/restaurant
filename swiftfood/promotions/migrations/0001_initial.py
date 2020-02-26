@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('order', '0001_initial'),
+        ('mycart', '0001_initial'),
     ]
 
     operations = [
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('promotion_picture', models.ImageField(blank=True, null=True, upload_to='promotions/%Y/%m/')),
                 ('description', models.CharField(blank=True, db_index=True, max_length=50)),
                 ('discount', models.FloatField(default=0)),
-                ('promotion_order', models.ManyToManyField(to='order.OrderMenu')),
+                ('promotion_order', models.ManyToManyField(to='reference.MyCart')),
             ],
         ),
     ]

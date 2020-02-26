@@ -1,11 +1,11 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import OrderMenu
+from .models import MyCart
 
 
-@admin.register(OrderMenu)
-class OrderAdmin(admin.ModelAdmin):
+@admin.register(MyCart)
+class MyCartAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'amount',

@@ -28,6 +28,7 @@ class SerializerUser(serializers.ModelSerializer):
                   'email',
                   )
 
+
 class SerializerList(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     review_score = serializers.IntegerField(min_value=1, max_value=5)
@@ -45,5 +46,3 @@ class SerializerList(serializers.ModelSerializer):
 
     def get_user(self, review):
         return SerializerUser(review.user).data
-
-

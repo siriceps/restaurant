@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from .views import OrderMenuView
 
 router = DefaultRouter()
-router.register(r'order', OrderMenuView)
+router.register(r'mycart', OrderMenuView)
 
 urlpatterns = [
 

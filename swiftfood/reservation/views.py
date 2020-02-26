@@ -2,7 +2,7 @@ from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
 from reservation.models import Reservation
-from reservation.serializer import ReservationListSerializer
+from reservation.serializer import ReservationListSerializer, ReservationDestroy
 
 
 class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin,
@@ -30,9 +30,11 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Cre
     def destroy(self, request, *args, **kwargs):
         count = self.get_object()
         # count = Reservation.objects.filter('count').delete()
-        old_data = ReservationListSerializer(count).data
+        old_data = ReservationDestroy(count).data
         old_data.delete()
+        # Reservation.objects.filter(count=count).all().delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
     # def create(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
     #     serializer.is_valid(raise_exception=True)

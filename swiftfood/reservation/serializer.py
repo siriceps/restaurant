@@ -4,7 +4,6 @@ from reservation.models import Reservation
 
 
 class ReservationListSerializer(serializers.ModelSerializer):
-    # now_queue = serializers.SerializerMethodField()
     class Meta:
         model = Reservation
         fields = (
@@ -16,11 +15,10 @@ class ReservationListSerializer(serializers.ModelSerializer):
             'count',
         )
 
-# @staticmethod
-# def now_queue(self):
-#
-#     queue = Reservation.objects.filter(queue=self.queue).last()
-#     for now in queue:
 
-
-
+class ReservationDestroy(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = (
+            'count',
+        )

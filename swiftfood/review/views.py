@@ -28,30 +28,33 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         data = serializer.validated_data
-        if Review.is_user_exists(request.user):
-            return Response(status=status.HTTP_409_CONFLICT)
-        else:
-            self.perform_create(serializer)
+        # if Review.is_user_exists(request.user):
+        #     return Response(status=status.HTTP_409_CONFLICT)
+        # else:
+        self.perform_create(serializer)
         review = Review.objects.filter(
             review_text=data['review_text'],
             review_score=data['review_score'],
             user=request.user
         ).first()
+
         headers = self.get_success_headers(serializer.data)
         return Response(self.get_serializer(review).data, status=status.HTTP_201_CREATED, headers=headers)
 
-    def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+def perform_create(self, serializer):
+    return serializer.save(user=self.request.user)
 
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+
+def list(self, request, *args, **kwargs):
+    queryset = self.filter_queryset(self.get_queryset())
+    page = self.paginate_queryset(queryset)
+    if page is not None:
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
+
+    serializer = self.get_serializer(queryset, many=True)
+    return Response(serializer.data)
 
 
 class Average(mixins.ListModelMixin, viewsets.GenericViewSet):

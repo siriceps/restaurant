@@ -6,7 +6,7 @@ from menu.models import Menu
 from django.conf import settings
 
 
-class OrderMenu(models.Model):
+class MyCart(models.Model):
     food_menu = models.ManyToManyField(Menu)
     amount = models.SmallIntegerField(default=1)
     datetime = models.DateTimeField(default=datetime.now, blank=True, editable=False)
@@ -19,7 +19,7 @@ class OrderMenu(models.Model):
 
     @staticmethod
     def is_user_exists(user):
-        return OrderMenu.objects.filter(user=user).exists()
+        return MyCart.objects.filter(user=user).exists()
 
     @property
     def get_food_menu(self):
