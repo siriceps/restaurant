@@ -10,7 +10,7 @@ class OrderListSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'food_menu',
-            'amount',
+            'quantity',
             'datetime',
             'is_confirm',
             'service_charge',

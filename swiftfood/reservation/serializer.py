@@ -8,7 +8,7 @@ class ReservationListSerializer(serializers.ModelSerializer):
         model = Reservation
         fields = (
             'id',
-            'amount',
+            'quantity',
             'queue',
             'datetime',
             'is_confirm',

@@ -12,7 +12,6 @@ class MyCartListSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'food_menu',
-            'amount',
             'datetime',
             'is_confirm',
             'service_charge',
@@ -43,7 +42,7 @@ class MyCartSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'food_menu',
-            'amount',
+            'quantity',
             'datetime',
             'is_confirm',
             'service_charge',

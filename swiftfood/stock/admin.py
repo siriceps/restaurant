@@ -6,4 +6,4 @@ from .models import Stock
 
 @admin.register(Stock)
 class StockAdmin(admin.ModelAdmin):
-    list_display = ('id', 'material_name', 'amount_material', 'material_picture')
+    list_display = ('id', 'material_name', 'quantity_material', 'material_picture')

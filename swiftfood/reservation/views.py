@@ -41,7 +41,7 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Cre
     #     data = serializer.validated_data
     #     Reservation.objects.create(
     #         queue=data['queue'],
-    #         amount=data['amount'],
+    #         quantity=data['quantity'],
     #         datetime=data['datetime'],
     #         is_confirm=data['is_confirm'],
     #     )

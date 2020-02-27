@@ -8,7 +8,7 @@ class ReservationAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'queue',
-        'amount',
+        'quantity',
         'datetime',
         'is_confirm',
         'count',

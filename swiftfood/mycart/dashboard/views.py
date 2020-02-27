@@ -39,7 +39,7 @@ class OrderMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Creat
     #
     #     mycart = OrderMenu.objects.create(
     #         food_menu=data['food_menu'],
-    #         amount=data['amount'],
+    #         quantity=data['quantity'],
     #         datetime=data['datetime'],
     #         service_charge=data['service_charge'],
     #         vat=data['vat'],

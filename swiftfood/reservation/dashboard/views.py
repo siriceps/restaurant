@@ -23,7 +23,7 @@ class ReservationViewAdmin(viewsets.ModelViewSet):
         # self.perform_create(serializer)
         Reservation.objects.create(
             queue=data['queue'],
-            amount=data['amount'],
+            quantity=data['quantity'],
 
         )
         headers = self.get_success_headers(serializer.data)

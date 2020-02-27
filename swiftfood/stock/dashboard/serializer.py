@@ -9,7 +9,7 @@ class StockSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'material_name',
-            'amount_material',
+            'quantity_material',
             # 'material_picture',
         )
 
