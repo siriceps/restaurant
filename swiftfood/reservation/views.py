@@ -2,13 +2,13 @@ from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
 from reservation.models import Reservation
-from reservation.serializer import ReservationListSerializer, ReservationDestroy
+from reservation.serializer import ReservationDestroy, ReservationSerializer
 
 
 class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin,
                       mixins.DestroyModelMixin):
     queryset = Reservation.objects.all()
-    serializer_class = ReservationListSerializer
+    serializer_class = ReservationSerializer
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

@@ -12,5 +12,5 @@ class Menu(models.Model):
     menu_image = models.ImageField(upload_to='menu/%Y/%m/', null=True, blank=True)
     discount_price = models.SmallIntegerField(default=0, blank=True)
     description = models.CharField(max_length=50, db_index=True, blank=True)
-
+    is_display = models.BooleanField(default=True)
 

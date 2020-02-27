@@ -16,6 +16,15 @@ class ReservationListSerializer(serializers.ModelSerializer):
         )
 
 
+class ReservationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = (
+            'id',
+            'quantity',
+        )
+
+
 class ReservationDestroy(serializers.ModelSerializer):
     class Meta:
         model = Reservation

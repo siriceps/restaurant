@@ -16,4 +16,5 @@ class MenuListSerializer(serializers.ModelSerializer):
             'discount_price',
             'description',
             'material',
+            'is_display',
         )
