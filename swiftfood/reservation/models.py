@@ -3,6 +3,8 @@ from django.db import models
 
 from django.conf import settings
 
+from accounts.models import Account
+
 
 class Reservation(models.Model):
     quantity = models.SmallIntegerField(default=1)
@@ -12,4 +14,6 @@ class Reservation(models.Model):
     count = models.SmallIntegerField(default=1)  # for call queue
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
 
-
+    @staticmethod
+    def is_user_exists(user):
+        return Reservation.objects.filter(user=user).exists()

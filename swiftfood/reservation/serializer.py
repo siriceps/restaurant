@@ -57,5 +57,4 @@ class SerializerUser(serializers.ModelSerializer):
         model = Account
         fields = ('id',
                   'username',
-                  'email',
                   )

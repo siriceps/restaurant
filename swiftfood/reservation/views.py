@@ -40,13 +40,19 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Cre
         headers = self.get_success_headers(serializer.data)
         return Response(self.get_serializer(reservation).data, status=status.HTTP_201_CREATED, headers=headers)
 
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
+
     def destroy(self, request, *args, **kwargs):
-        count = self.get_object().all()
+        count = self.get_object()
         # count = Reservation.objects.filter('count').delete()
         old_data = ReservationDestroy(count).data
         old_data.delete()
         # Reservation.objects.filter(count=count).all().delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
 
     # def create(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
