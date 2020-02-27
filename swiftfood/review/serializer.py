@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from accounts.models import Account
 from .models import Review
 from django.contrib.auth.models import User
 
@@ -22,7 +24,7 @@ class SerializerModel(serializers.ModelSerializer):
 
 class SerializerUser(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = Account
         fields = ('id',
                   'username',
                   'email',

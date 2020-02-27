@@ -12,4 +12,5 @@ class ReservationAdmin(admin.ModelAdmin):
         'datetime',
         'is_confirm',
         'count',
+        'user',
     )

@@ -1,6 +1,8 @@
 from rest_framework import viewsets, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from accounts.models import Account
 from menu.serializer import MenuListSerializer
 from ..dashboard.serializer import MenuSerializer
 from ..models import Menu
@@ -10,6 +12,11 @@ from stock.models import Stock
 class MenuView(viewsets.ModelViewSet):
     queryset = Menu.objects.all().order_by('categories')
     serializer_class = MenuSerializer
+
+    # staff = Account.objects.filter('id', 'is_admin', 'is_staff').all()
+    # if staff is True:
+    #     check = staff
+    permission_classes = [IsAuthenticated, ]
 
     action_serializers = {
         'create': MenuSerializer,
@@ -60,4 +67,3 @@ class MenuView(viewsets.ModelViewSet):
     #
     #     headers = self.get_success_headers(serializer.data)
     #     return Response(data, status=status.HTTP_201_CREATED, headers=headers)
-
