@@ -48,10 +48,6 @@ class AccountListSerializer(serializers.ModelSerializer):
 
 class AccountCreateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(allow_null=True, required=False)
-    level = serializers.IntegerField(required=False, allow_null=True)
-
-    supervisor = serializers.IntegerField(required=False, allow_null=True)
-    department = serializers.IntegerField(required=False, allow_null=True)
     position = serializers.IntegerField(required=False, allow_null=True)
 
     class Meta:

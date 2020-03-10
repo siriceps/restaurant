@@ -12,9 +12,18 @@ class LoginSerializer(serializers.Serializer):
 
 
 class AccountRegisterSerializer(serializers.ModelSerializer):
+    # username = serializers.SerializerMethodField()
+    # email = serializers.SerializerMethodField()
+    # first_name = serializers.SerializerMethodField()
+    # last_name = serializers.SerializerMethodField()
+    # phone = serializers.SerializerMethodField()
+
     class Meta:
         model = Account
-        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone']
+
+    # def get_username(self, accounts):
+    #     return
 
 
 class RegisterSerializer(serializers.Serializer):

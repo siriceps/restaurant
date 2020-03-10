@@ -79,17 +79,12 @@ class LogoutView(APIView):
 
 
 class AccountManagement(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Account.objects.all()
+    queryset = Account.objects.none()
     permission_classes = (IsAuthenticated,)
-    serializer_class = AccountListSerializer
+    serializer_class = AccountRegisterSerializer
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Account.objects.filter(id=self.request.user.id)
+        else:
+            return self.queryset

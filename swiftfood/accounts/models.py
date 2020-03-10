@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import check_password
@@ -58,7 +57,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     code = models.CharField(max_length=32, db_index=True, blank=True, null=True, default=None)  # Employee id
     is_staff = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=True)
-    # position = models.IntegerField(choices=, default=3)
+    position = models.CharField(max_length=64, null=True, blank=True, db_index=True)
     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
     username = models.CharField(
         _('username'),
@@ -89,6 +88,31 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering = ['username']
+
+    @staticmethod
+    def pull_account(username_or_email):
+        _account = Account.objects.filter(username=username_or_email).first()
+        if _account is None:
+            _account = Account.objects.filter(email=username_or_email).exclude(email__isnull=True).first()
+        return _account
+
+    @staticmethod
+    def is_unique_code(code):
+        if not code:
+            return True
+        return not Account.objects.filter(code=code).exclude(code__isnull=True).exists()
+
+    @staticmethod
+    def is_unique_username(username):
+        if not username:
+            return True
+        return not Account.objects.filter(username=username).exclude(username__isnull=True).exists()
+
+    @staticmethod
+    def is_unique_email(email):
+        if not email:
+            return True
+        return not Account.objects.filter(email=email).exclude(email__isnull=True).exists()
 
 
 class PasswordHistory(models.Model):
