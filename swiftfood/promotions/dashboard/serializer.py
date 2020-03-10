@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from accounts.generator_code import gen_code
+from promotions.generator_code import gen_code
 from promotions.models import Promotions
 
 

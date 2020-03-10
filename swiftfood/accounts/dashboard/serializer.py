@@ -43,7 +43,6 @@ class AccountListSerializer(serializers.ModelSerializer):
             'email',
             'username',
             'image',
-            'supervisor',
         )
 
 
@@ -67,7 +66,6 @@ class AccountCreateSerializer(serializers.ModelSerializer):
             'is_force_reset_password',
             'phone',
             'level',
-            'supervisor',
             'department',
             'position',
         )

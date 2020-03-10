@@ -30,6 +30,7 @@ class ReservationSerializer(serializers.ModelSerializer):
         model = Reservation
         fields = (
             'id',
+            'queue',
             'quantity',
             'user',
         )

@@ -29,17 +29,17 @@ class ReviewView(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
 
         data = serializer.validated_data
-        if Review.is_user_exists(request.user):
-            return Response(status=status.HTTP_409_CONFLICT)
-        else:
-            self.perform_create(serializer)
+        # if Review.is_user_exists(request.user):
+        #     return Response(status=status.HTTP_409_CONFLICT)
+        # else:
+        self.perform_create(serializer)
         review = Review.objects.filter(
             review_text=data['review_text'],
             review_score=data['review_score'],
             user=request.user
         ).first()
-        headers = self.get_success_headers(serializer.data)
-        return Response(self.get_serializer(review).data, status=status.HTTP_201_CREATED, headers=headers)
+        # headers = self.get_success_headers(serializer.data)
+        return Response(self.get_serializer(review).data, status=status.HTTP_201_CREATED)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)

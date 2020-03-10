@@ -1,6 +1,6 @@
 from django.utils import timezone
-from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
+from rest_framework import viewsets, mixins
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from ..dashboard.serializer import AccountSerializer, AccountCreateSerializer, AccountListSerializer
@@ -53,3 +53,20 @@ class AccountView(viewsets.GenericViewSet):
 
         if 'is_force_reset_password' in data and data['is_force_reset_password']:
             account.force_reset_password()
+
+
+class AccountManagementView(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Account.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = AccountListSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

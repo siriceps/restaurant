@@ -38,8 +38,8 @@ class ReviewViewSet(viewsets.ModelViewSet):
             user=request.user
         ).first()
 
-        headers = self.get_success_headers(serializer.data)
-        return Response(self.get_serializer(review).data, status=status.HTTP_201_CREATED, headers=headers)
+        # headers = self.get_success_headers(serializer.data)
+        return Response(self.get_serializer(review).data, status=status.HTTP_201_CREATED)
 
 
 def perform_create(self, serializer):

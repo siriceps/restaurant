@@ -1,9 +1,12 @@
 from rest_framework import serializers
 
+from accounts.models import Account
 from ..models import Menu
 
 
 class MenuSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
     class Meta:
         model = Menu
         fields = (
@@ -14,6 +17,17 @@ class MenuSerializer(serializers.ModelSerializer):
             # 'menu_image',
             'discount_price',
             'description',
-            'date_exp',
             'material',
+            'user'
         )
+
+    def get_user(self, menu):
+        return SerializerUser(menu.user).data
+
+
+class SerializerUser(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ('id',
+                  'username',
+                  )

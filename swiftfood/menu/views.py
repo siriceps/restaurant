@@ -15,8 +15,8 @@ class MenuList(mixins.ListModelMixin, viewsets.GenericViewSet):
     }
     permission_classes = (AllowAny,)
 
-    # def get_queryset(self):
-    #     return self.queryset.filter(is_di)
+    def get_queryset(self):
+        return self.queryset.filter(is_display=True)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

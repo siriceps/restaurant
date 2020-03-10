@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, mixins
 from rest_framework.response import Response
 
 from stock.dashboard.serializer import StockSerializer
@@ -30,3 +30,15 @@ class StockViewAdmin(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+#
+# class CountMaterial(mixins.ListModelMixin, viewsets.GenericViewSet):
+#     queryset = Stock.objects.all()
+#     serializer_class = StockSerializer
+#
+#     def list(self, request, *args, **kwargs):
+#         count_material = Stock.objects.values('material_name', 'quantity_material')
+#         if count_material.quantity_material <= 2:
+#             return Response({'detail almost out of stock'})
+#         elif count_material.quantity_material == 0:
+#             return Response({'detail out of stock'})

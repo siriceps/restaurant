@@ -1,6 +1,7 @@
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
+from menu.models import Menu
 from reservation.models import Reservation
 from reservation.serializer import ReservationDestroy, ReservationSerializer, ReservationListSerializer
 
@@ -28,17 +29,17 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Cre
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         data = serializer.validated_data
-
+        # if request.user
         self.perform_create(serializer)
-        reservation = Reservation.objects.filter(
+        menu = Menu.objects.filter(
+            queue=data['queue'],
             quantity=data['quantity'],
             user=request.user
         ).first()
 
         headers = self.get_success_headers(serializer.data)
-        return Response(self.get_serializer(reservation).data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(self.get_serializer(menu).data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)

@@ -2,12 +2,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.sessions.models import Session
 from rest_framework import viewsets, mixins, status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Account
-from .serializer import LoginSerializer, RegisterSerializer, AccountRegisterSerializer
+from .serializer import LoginSerializer, RegisterSerializer, AccountRegisterSerializer, AccountListSerializer
 
 
 class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -78,3 +78,18 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_200_OK)
 
 
+class AccountManagement(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Account.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = AccountListSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

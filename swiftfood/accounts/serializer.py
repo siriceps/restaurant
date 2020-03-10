@@ -35,3 +35,11 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 class ForgetPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField()
+
+
+class AccountListSerializer(serializers.Serializer):
+    username = serializers.CharField(allow_blank=False, required=True)
+    email = serializers.CharField(max_length=255, required=True, allow_blank=False)
+    first_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
+    last_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
+    phone = serializers.CharField(max_length=10, required=True, allow_blank=False)
