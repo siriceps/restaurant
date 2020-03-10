@@ -20,10 +20,11 @@ class MenuListSerializer(serializers.ModelSerializer):
             'description',
             'material',
             'is_display',
+            'user'
         )
 
-    def get_user(self, Menu):
-        return SerializerUser(Menu.user).data
+    def get_user(self, menu):
+        return SerializerUser(menu.user).data
 
 
 class SerializerUser(serializers.ModelSerializer):

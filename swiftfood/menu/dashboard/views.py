@@ -29,20 +29,27 @@ class MenuView(viewsets.ModelViewSet):
                 return self.action_serializers[self.action]
         return super().get_serializer_class()
 
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     data = serializer.validated_data
+    #     account = Account.objects.filter('id').first()
+    #     if account == data['user']:
+    #         if account.is_admin is True or account.is_staff is True:
+    #             self.perform_create(serializer)
+    #             headers = self.get_success_headers(serializer.data)
+    #             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    #         else:
+    #             return Response({'error': 'detail you have not permission '}, status=status.HTTP_401_UNAUTHORIZED)
+    #     else:
+    #         return Response({'error': 'detail you have not permission '}, status=status.HTTP_401_UNAUTHORIZED)
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        data = serializer.validated_data
-        account = Account.objects.filter('id').first()
-        if account == data['user']:
-            if account.is_admin is True or account.is_staff is True:
-                self.perform_create(serializer)
-                headers = self.get_success_headers(serializer.data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-            else:
-                return Response({'error': 'detail you have not permission '}, status=status.HTTP_401_UNAUTHORIZED)
-        else:
-            return Response({'error': 'detail you have not permission '}, status=status.HTTP_401_UNAUTHORIZED)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
