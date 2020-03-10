@@ -27,3 +27,7 @@ class MyCart(models.Model):
         for i in self.food_menu:
             total += i.price
         return total
+
+
+# class Order(models.Model):
+#    mycart = models.ForeignKey()
