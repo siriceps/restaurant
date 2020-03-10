@@ -63,10 +63,8 @@ class AccountCreateSerializer(serializers.ModelSerializer):
             'password',
             'first_name',
             'last_name',
-            'is_force_reset_password',
+            # 'is_force_reset_password',
             'phone',
-            'level',
-            'department',
             'position',
         )
 
