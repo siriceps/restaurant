@@ -79,7 +79,7 @@ class LogoutView(APIView):
 
 
 class AccountManagement(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Account.objects.none()
+    queryset = Account.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = AccountRegisterSerializer
 

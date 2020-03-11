@@ -7,27 +7,53 @@ from django.conf import settings
 
 
 class MyCart(models.Model):
-    food_menu = models.ManyToManyField(Menu)
+    food_menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
     quantity = models.SmallIntegerField(default=1)
-    datetime = models.DateTimeField(default=datetime.now, blank=True, editable=False)
-    is_confirm = models.BooleanField(default=True)
-    service_charge = models.SmallIntegerField(default=0)
-    vat = models.FloatField(default=0)
-    total = models.FloatField(default=0)
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
-    is_paid = models.BooleanField(default=False)
 
     @staticmethod
     def is_user_exists(user):
         return MyCart.objects.filter(user=user).exists()
 
-    @property
-    def get_food_menu(self):
-        total = 0
-        for i in self.food_menu:
-            total += i.price
-        return total
+    @staticmethod
+    def pull(id):
+        try:
+            my_cart = MyCart.objects.get(id=id)
+        except:
+            my_cart = None
+        return my_cart
+
+    # @property
+    # def get_food_menu(self):
+    #     total = 0
+    #     for i in self.food_menu:
+    #         total += i.price
+    #     return total
 
 
-# class Order(models.Model):
-#    mycart = models.ForeignKey()
+class Order(models.Model):
+    my_cart = models.ForeignKey(MyCart, on_delete=models.CASCADE)
+    datetime_order = models.DateTimeField(default=datetime.now, blank=True, editable=False)
+    service_charge = models.FloatField(default=0)
+    vat = models.FloatField(default=0)
+    total = models.FloatField(default=0)
+    is_paid = models.BooleanField(default=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+
+    @staticmethod
+    def is_user_exists(user):
+        return Order.objects.filter(user=user).exists()
+
+    @staticmethod
+    def pull(id):
+        try:
+            order = Order.objects.get(id=id)
+        except:
+            order = None
+        return order
+
+    def get_mycart_list(self):
+        return self.mycart_set.all()
+
+

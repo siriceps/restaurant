@@ -4,26 +4,6 @@ from accounts.models import Account
 from mycart.models import MyCart
 
 
-class MyCartListSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
-
-    class Meta:
-        model = MyCart
-        fields = (
-            'id',
-            'food_menu',
-            'datetime',
-            'is_confirm',
-            'service_charge',
-            'vat',
-            'total',
-            'user'
-        )
-
-    def get_user(self, mycart):
-        return SerializerUser(mycart.user).data
-
-
 class SerializerUser(serializers.ModelSerializer):
     class Meta:
         model = Account
@@ -33,8 +13,7 @@ class SerializerUser(serializers.ModelSerializer):
                   )
 
 
-class MyCartSerializer(serializers.ModelSerializer):
-    vat = serializers.SerializerMethodField()
+class MyCartListSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 
     class Meta:
@@ -42,9 +21,25 @@ class MyCartSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'food_menu',
+            'user'
+        )
+
+    def get_user(self, mycart):
+        return SerializerUser(mycart.user).data
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    vat = serializers.SerializerMethodField()
+    user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MyCart
+        fields = (
+            'id',
+            'my_cart',
             'quantity',
-            'datetime',
-            'is_confirm',
+            'datetime_order',
+            'is_paid',
             'service_charge',
             'vat',
             'total',

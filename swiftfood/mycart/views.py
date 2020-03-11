@@ -2,7 +2,7 @@ from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
 from .models import MyCart
-from .serializer import MyCartListSerializer, MyCartSerializer
+from .serializer import MyCartListSerializer, OrderSerializer
 
 
 class OrderMenuView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin):
@@ -12,7 +12,7 @@ class OrderMenuView(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Creat
     action_serializers = {
         'create': MyCartListSerializer,
         'list': MyCartListSerializer,
-        'retrieve': MyCartSerializer,
+        'retrieve': OrderSerializer,
     }
 
     def get_serializer_class(self):

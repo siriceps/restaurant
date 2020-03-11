@@ -33,3 +33,9 @@ class SerializerUser(serializers.ModelSerializer):
         fields = ('id',
                   'username',
                   )
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Menu
+        fields = ('categories')

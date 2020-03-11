@@ -1,5 +1,9 @@
-from django.urls import path, include
+from django.urls import path
 from rest_framework import routers
+from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
+from django.views.static import serve
+from django.conf import settings
 
 from accounts.view_change_password import ChangePasswordViewSet
 from accounts.view_forget_password import ForgetPasswordView
@@ -17,5 +21,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view()),
 
 ]
+
 urlpatterns += router.urls
-AccountManagement

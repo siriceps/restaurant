@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import MyCart
+from .models import MyCart, Order
 
 
 @admin.register(MyCart)
@@ -9,11 +9,18 @@ class MyCartAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'quantity',
-        'datetime',
-        'is_confirm',
+        'user',
+    )
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'datetime_order',
+        'is_paid',
         'service_charge',
         'vat',
         'total',
         'user',
-        'is_paid',
     )

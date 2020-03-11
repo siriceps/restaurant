@@ -1,10 +1,11 @@
+from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.views.static import serve
 from rest_framework_swagger.views import get_swagger_view
 
 from accounts.view_forget_password import ConfirmPassword
-from menu.views import MenuList
 
 urlpatterns_api_user = [
     path('api/accounts/', include('accounts.urls')),
@@ -14,7 +15,6 @@ urlpatterns_api_user = [
     path('api/promotions/', include('promotions.urls')),
     path('api/reservation/', include('reservation.urls')),
     path('api/stock/', include('stock.urls')),
-
 
 ]
 
@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^api-auth', include('rest_framework.urls')),
     url(r'setpassword/$', ConfirmPassword.as_view()),
     url(r'forgetpassword/$', ConfirmPassword.as_view()),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 
 ]
 

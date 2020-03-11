@@ -25,6 +25,7 @@ class ReservationListSerializer(serializers.ModelSerializer):
 
 class ReservationSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
+    queue = serializers.SerializerMethodField()
 
     class Meta:
         model = Reservation
@@ -37,6 +38,11 @@ class ReservationSerializer(serializers.ModelSerializer):
 
     def get_user(self, reservations):
         return SerializerUser(reservations.user).data
+
+    def get_queue(self):
+        queue = 0
+        queue += 1
+        return queue
 
 
 class ReservationDestroy(serializers.ModelSerializer):

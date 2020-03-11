@@ -20,7 +20,7 @@ class AccountRegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ['username', 'first_name', 'last_name', 'email', 'phone']
+        fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'point']
 
     # def get_username(self, accounts):
     #     return
