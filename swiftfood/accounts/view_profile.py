@@ -11,7 +11,7 @@ from accounts.serializer import AccountProfileSerializer, ProfileUpdateSerialize
 class AccountManagement(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Account.objects.all()
     permission_classes = (AllowAny,)
-    serializer_class = AccountProfileSerializer
+    serializer_class = ProfileUpdateSerializer
     pagination_class = None
 
     permission_classes_action = {
@@ -19,11 +19,11 @@ class AccountManagement(mixins.ListModelMixin, viewsets.GenericViewSet):
         'profile_patch': [IsAuthenticated],
     }
 
-    def get_permissions(self):
-        try:
-            return [permission() for permission in self.permission_classes_action[self.action]]
-        except KeyError:
-            return [permission() for permission in self.permission_classes]
+    # def get_permissions(self):
+    #     try:
+    #         return [permission() for permission in self.permission_classes_action[self.action]]
+    #     except KeyError:
+    #         return [permission() for permission in self.permission_classes]
 
     def get_queryset(self):
         if self.request.user.is_authenticated:

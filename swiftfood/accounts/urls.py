@@ -11,7 +11,7 @@ router.register(r'login', AccountLogin)
 router.register(r'register', AccountRegister)
 router.register(r'changepassword', ChangePasswordViewSet)
 router.register(r'forgetpassword', ForgetPasswordView)
-router.register(r'accountmanagement', AccountManagement)
+router.register(r'accounviewprofile', AccountManagement)
 
 urlpatterns = [
 
