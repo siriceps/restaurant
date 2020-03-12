@@ -50,7 +50,7 @@ class Category(viewsets.GenericViewSet, mixins.ListModelMixin):
 
     def list(self, request, *args, **kwargs):
         type = request.GET.get('type', None)
-        queryset = self.filter_queryset(self.get_queryset().filter(categories=type))
+        queryset = self.get_queryset().filter(categories=type)
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)

@@ -2,12 +2,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.sessions.models import Session
 from rest_framework import viewsets, mixins, status
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Account
-from .serializer import LoginSerializer, RegisterSerializer, AccountRegisterSerializer, AccountListSerializer
+from .serializer import LoginSerializer, RegisterSerializer, AccountProfileSerializer
 
 
 class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -24,6 +24,8 @@ class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
         account = authenticate(username=data['username'].strip().lower(), password=data['password'])
         if account is None:
             return Response({'detail': 'username or password does not exit'}, status=status.HTTP_404_NOT_FOUND)
+        # elif account.password != data['password']:
+        #     return Response({'detail': 'password is incorrect'}, status=status.HTTP_404_NOT_FOUND)
 
         login(request, account)
         return Response({}, status=status.HTTP_201_CREATED)
@@ -49,7 +51,7 @@ class AccountRegister(mixins.CreateModelMixin, viewsets.GenericViewSet):
         data.pop('confirm_password')
         data['password'] = make_password(data['password'])
         data['username'] = data['username'].lower()
-        serializer = AccountRegisterSerializer(data=data)
+        serializer = AccountProfileSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status.HTTP_201_CREATED)
@@ -76,15 +78,3 @@ class LogoutView(APIView):
             Session.remove(account_id, session_key)
         finally:
             return Response(status=status.HTTP_200_OK)
-
-
-class AccountManagement(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Account.objects.all()
-    permission_classes = (IsAuthenticated,)
-    serializer_class = AccountRegisterSerializer
-
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return Account.objects.filter(id=self.request.user.id)
-        else:
-            return self.queryset

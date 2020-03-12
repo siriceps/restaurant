@@ -1,8 +1,8 @@
-from datetime import timezone
+# from rest_framework.fields import ImageField
 
-from swiftfood import settings
 from rest_framework import serializers
 
+from swiftfood import settings
 from .models import Account
 
 
@@ -11,19 +11,18 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(style={'input_type': 'password'}, max_length=20, min_length=2)
 
 
-class AccountRegisterSerializer(serializers.ModelSerializer):
-    # username = serializers.SerializerMethodField()
-    # email = serializers.SerializerMethodField()
-    # first_name = serializers.SerializerMethodField()
-    # last_name = serializers.SerializerMethodField()
-    # phone = serializers.SerializerMethodField()
-
+class AccountProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'point']
 
-    # def get_username(self, accounts):
-    #     return
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    # image = ImageField(allow_empty_file=True, allow_null=True, required=False)
+
+    class Meta:
+        model = Account
+        fields = ('username', 'first_name', 'last_name', 'email', 'phone', 'point', 'image')
 
 
 class RegisterSerializer(serializers.Serializer):

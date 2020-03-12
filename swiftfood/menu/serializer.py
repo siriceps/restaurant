@@ -30,12 +30,10 @@ class MenuListSerializer(serializers.ModelSerializer):
 class SerializerUser(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('id',
-                  'username',
-                  )
+        fields = ('id', 'username')
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
-        fields = ('categories')
+        fields = ('id', 'categories')

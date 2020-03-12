@@ -5,7 +5,6 @@ from ..models import Account
 
 
 class AccountSerializer(serializers.ModelSerializer):
-    # notification_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Account
@@ -14,7 +13,6 @@ class AccountSerializer(serializers.ModelSerializer):
             'email',
             'first_name',
             'last_name',
-            # 'notification_count'
         )
 
         def __init__(self, *args, **kwargs):
