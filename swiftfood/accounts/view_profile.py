@@ -1,11 +1,10 @@
 from django.core.cache import cache
-
 from rest_framework import mixins, viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
 from accounts.models import Account
-from accounts.serializer import AccountProfileSerializer, ProfileUpdateSerializer
+from accounts.serializer import ProfileUpdateSerializer
 
 
 class AccountManagement(mixins.ListModelMixin, viewsets.GenericViewSet):

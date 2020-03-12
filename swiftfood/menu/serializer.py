@@ -37,3 +37,11 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = ('id', 'categories')
+
+
+class MenuUpdateSerializer(serializers.ModelSerializer):
+    # image = ImageField(allow_empty_file=True, allow_null=True, required=False)
+
+    class Meta:
+        model = Menu
+        fields = ('id', 'categories', 'menu_name', 'price', 'menu_image', 'description', 'material')
