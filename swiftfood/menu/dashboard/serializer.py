@@ -31,3 +31,15 @@ class SerializerUser(serializers.ModelSerializer):
         fields = ('id',
                   'username',
                   )
+
+
+class MenuUpdateSerializerAdmin(serializers.ModelSerializer):
+    class Meta:
+        model = Menu
+        fields = ('id', 'categories', 'menu_name', 'price', 'menu_image', 'description', 'material')
+
+
+class MenuCreateSerializerAdmin(serializers.ModelSerializer):
+    class Meta:
+        model = Menu
+        fields = ('id', 'categories', 'menu_name', 'price', 'description', 'material')

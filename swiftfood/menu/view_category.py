@@ -6,7 +6,7 @@ from menu.models import Menu
 from menu.serializer import CategorySerializer
 
 
-class Category(viewsets.GenericViewSet, mixins.ListModelMixin):
+class Category(viewsets.GenericViewSet):
     queryset = Menu.objects.all()
     serializer_class = CategorySerializer
 
