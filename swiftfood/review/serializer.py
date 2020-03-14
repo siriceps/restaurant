@@ -2,18 +2,17 @@ from rest_framework import serializers
 
 from accounts.models import Account
 from .models import Review
-from django.contrib.auth.models import User
 
 
 class SerializerModel(serializers.ModelSerializer):
-    StarCount = serializers.IntegerField(min_value=1, max_value=5)
+    starCount = serializers.IntegerField(min_value=1, max_value=5)
     user = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
         fields = ('id',
                   'user',
-                  'StarCount',
+                  'starCount',
                   'review_text',
                   'date_time',
                   )
@@ -33,7 +32,7 @@ class SerializerUser(serializers.ModelSerializer):
 
 class SerializerList(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
-    StarCount = serializers.IntegerField(min_value=1, max_value=5)
+    starCount = serializers.IntegerField(min_value=1, max_value=5)
     review_text = serializers.CharField(max_length=255)
 
     class Meta:
@@ -41,7 +40,7 @@ class SerializerList(serializers.ModelSerializer):
         fields = (
             'id',
             'user',
-            'StarCount',
+            'starCount',
             'review_text',
             'date_time',
         )

@@ -35,7 +35,7 @@ class ReviewView(viewsets.GenericViewSet):
         self.perform_create(serializer)
         review = Review.objects.filter(
             review_text=data['review_text'],
-            review_score=data['review_score'],
+            starCount=data['starCount'],
             user=request.user
         ).first()
         # headers = self.get_success_headers(serializer.data)

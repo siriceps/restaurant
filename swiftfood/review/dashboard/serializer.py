@@ -5,7 +5,7 @@ from review.models import Review
 
 class ReviewSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
-    review_score = serializers.IntegerField(min_value=1, max_value=5)
+    starCount = serializers.IntegerField(min_value=1, max_value=5)
     review_text = serializers.CharField(max_length=255)
 
     class Meta:
@@ -13,7 +13,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'user',
-            'review_score',
+            'starCount',
             'review_text',
             # 'date_time',
         )

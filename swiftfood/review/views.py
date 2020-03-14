@@ -34,7 +34,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         review = Review.objects.filter(
             review_text=data['review_text'],
-            StarCount=data['StarCount'],
+            starCount=data['starCount'],
             user=request.user
         ).first()
 
