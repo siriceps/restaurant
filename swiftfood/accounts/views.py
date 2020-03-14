@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Account
-from .serializer import LoginSerializer, RegisterSerializer, AccountProfileSerializer
+from .serializer import LoginSerializer, RegisterSerializer, AccountProfileSerializer, AccountRegisterSerializer
 
 
 class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -51,7 +51,7 @@ class AccountRegister(mixins.CreateModelMixin, viewsets.GenericViewSet):
         data.pop('confirm_password')
         data['password'] = make_password(data['password'])
         data['username'] = data['username'].lower()
-        serializer = AccountProfileSerializer(data=data)
+        serializer = AccountRegisterSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status.HTTP_201_CREATED)

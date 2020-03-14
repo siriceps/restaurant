@@ -51,3 +51,9 @@ class AccountListSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
     last_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
     phone = serializers.CharField(max_length=10, required=True, allow_blank=False)
+
+
+class AccountRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ['username', 'password', 'first_name', 'last_name', 'email', 'phone']
