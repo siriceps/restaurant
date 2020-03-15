@@ -1,11 +1,11 @@
 from django.db.models import Avg
 from django.db.models import Count
+from rest_framework import mixins, status
+from rest_framework import viewsets
 from rest_framework.response import Response
+
 from .models import Review
 from .serializer import SerializerModel, SerializerList
-from rest_framework import viewsets
-from rest_framework import status
-from rest_framework import mixins
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
@@ -26,23 +26,25 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
-        data = serializer.validated_data
-        # if Review.is_user_exists(request.user):
-        #     return Response(status=status.HTTP_409_CONFLICT)
-        # else:
         self.perform_create(serializer)
-        review = Review.objects.filter(
-            review_text=data['review_text'],
-            starCount=data['starCount'],
-            user=request.user
-        ).first()
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     data = serializer.validated_data
+    #     self.perform_create(serializer)
+    #     review = Review.objects.filter(
+    #         review_text=data['review_text'],
+    #         starCount=data['starCount'],
+    #         # user=request.user
+    #     ).first()
+    #
+    #     # headers = self.get_success_headers(serializer.data)
+    #     return Response(self.get_serializer(review).data, status=status.HTTP_201_CREATED)
 
-        # headers = self.get_success_headers(serializer.data)
-        return Response(self.get_serializer(review).data, status=status.HTTP_201_CREATED)
-
-    def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
+    # def perform_create(self, serializer):
+    #     return serializer.save(user=self.request.user)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

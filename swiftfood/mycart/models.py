@@ -24,6 +24,8 @@ class MyCart(models.Model):
             my_cart = None
         return my_cart
 
+    def get_order_list(self):
+        return self.order_set.all()
     # @property
     # def get_food_menu(self):
     #     total = 0
@@ -52,8 +54,3 @@ class Order(models.Model):
         except:
             order = None
         return order
-
-    def get_mycart_list(self):
-        return self.mycart_set.all()
-
-
