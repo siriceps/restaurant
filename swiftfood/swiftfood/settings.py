@@ -31,7 +31,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Application definition
 
 AUTHENTICATION_BACKENDS = (
-    'account.authenticate.EmailModelBackend',
+    # 'accounts.authenticate.EmailModelBackend',
     'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -154,11 +154,11 @@ LANGUAGES = (
 
 TIME_ZONE = 'UTC'
 
-ADMINS = (
-    ('Pawarut Samavardhana', 'sir_ice39@outlook.com'),
-    # ('Supachai Viryacharoenkit', 'bothavich@conicle.com'),
-
-)
+# ADMINS = (
+#     ('Pawarut Samavardhana', 'sir_ice39@outlook.com'),
+#     # ('Supachai Viryacharoenkit', 'bothavich@conicle.com'),
+#
+# )
 
 USE_I18N = True
 
