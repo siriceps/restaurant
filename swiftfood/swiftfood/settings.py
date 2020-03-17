@@ -31,8 +31,8 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Application definition
 
 AUTHENTICATION_BACKENDS = (
-    # 'account.authenticate.EmailModelBackend',
-    # 'guardian.backends.ObjectPermissionBackend',
+    'account.authenticate.EmailModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -119,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 
-
 REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'utils.rest_framework.pagination.CustomPagination',
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
@@ -161,8 +160,6 @@ ADMINS = (
 
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 USE_I18N = True
 
 USE_L10N = True
@@ -184,3 +181,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sir_ice39@outlook.com'
 # EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
 EMAIL_USE_TLS = True
+IS_SEND_EMAIL = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+SESSION_SAVE_EVERY_REQUEST = True
