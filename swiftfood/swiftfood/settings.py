@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'aqjgib$@2i0&2s#s&ax-n#5f4&bmmzsar@8cy)bdfgp0f0*tit'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -48,11 +48,11 @@ INSTALLED_APPS = [
     'accounts',
     'menu',
     'review',
+    'reference',
     'promotions',
-    'mycart',
+    'order',
     'reservation',
     'stock',
-    'notification',
 
 ]
 
@@ -117,13 +117,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
 
 REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'utils.rest_framework.pagination.CustomPagination',
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
@@ -160,6 +173,8 @@ ADMINS = (
 
 )
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 USE_I18N = True
 
 USE_L10N = True
@@ -172,17 +187,8 @@ PASSWORD_MIN = 8
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sir_ice39@outlook.com'
 # EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
 EMAIL_USE_TLS = True
-IS_SEND_EMAIL = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-
-SESSION_SAVE_EVERY_REQUEST = True

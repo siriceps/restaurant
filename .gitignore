@@ -270,3 +270,5 @@ swiftfood/venv/Lib/site-packages/requests-2.22.0.dist-info/
 *.woff2
 
 swiftfood/venv/Lib/site-packages/simplejson-3.16.0-py3.8.egg-info/
+
+*.jpg
