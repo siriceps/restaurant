@@ -2,6 +2,7 @@ from django.db.models import Avg
 from django.db.models import Count
 from rest_framework import mixins, status
 from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from .models import Review
@@ -10,6 +11,7 @@ from .serializer import SerializerModel, SerializerList
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all().order_by('-date_time')
+    permission_classes = (AllowAny,)
     serializer_class = SerializerList
 
     action_serializers = {

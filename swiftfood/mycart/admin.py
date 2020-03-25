@@ -8,7 +8,10 @@ from .models import MyCart, Order
 class MyCartAdmin(admin.ModelAdmin):
     list_display = (
         'id',
+        'food_menu',
         'quantity',
+        # 'order',
+        'datetime_create',
         'user',
     )
 

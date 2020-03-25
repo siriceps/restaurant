@@ -14,9 +14,9 @@ class Menu(models.Model):
     discount_price = models.SmallIntegerField(default=0, blank=True)
     description = models.CharField(max_length=50, db_index=True, blank=True)
     is_display = models.BooleanField(default=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     material = models.ManyToManyField(Stock)
 
-    @staticmethod
-    def is_user_exists(user):
-        return Menu.objects.filter(user=user).exists()
+    # @staticmethod
+    # def is_user_exists(user):
+    #     return Menu.objects.filter(user=user).exists()

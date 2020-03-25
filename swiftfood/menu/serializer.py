@@ -5,8 +5,14 @@ from accounts.models import Account
 from .models import Menu
 
 
+class SerializerUser(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ('id', 'username')
+
+
 class MenuListSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
+    # user = serializers.SerializerMethodField()
 
     class Meta:
         model = Menu
@@ -20,17 +26,11 @@ class MenuListSerializer(serializers.ModelSerializer):
             'description',
             'material',
             'is_display',
-            'user'
+            # 'user'
         )
 
-    def get_user(self, menu):
-        return SerializerUser(menu.user).data
-
-
-class SerializerUser(serializers.ModelSerializer):
-    class Meta:
-        model = Account
-        fields = ('id', 'username')
+    # def get_user(self, menu):
+    #     return SerializerUser(menu.user).data
 
 
 class CategorySerializer(serializers.ModelSerializer):
