@@ -115,24 +115,60 @@ class Account(AbstractBaseUser, PermissionsMixin):
         return not Account.objects.filter(email=email).exclude(email__isnull=True).exists()
 
 
-class PasswordHistory(models.Model):
-    account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    password = models.CharField(_('password'), max_length=128)
-    datetime_create = models.DateTimeField(auto_now_add=True, db_index=True)
-
-    @staticmethod
-    def check_password(account, password, old_password):
-        def setter(password):
-            account.set_password(password)
-            # Password hash upgrades shouldn't be considered password changes.
-            account._password = None
-            account.save(update_fields=['password'])
-
-        return check_password(password, old_password, setter)
-
-
 class ForgetPassword(models.Model):
     token = models.CharField(max_length=64)
     account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-# class CustomUser(AbstractUser):
+
+# class Token(models.Model):
+#     account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+')
+#     token = models.CharField(max_length=100, blank=True, unique=True)
+#     datetime_create = models.DateField(auto_now_add=True, db_index=True)
+#
+#     class Meta:
+#         ordering = ['-datetime_create']
+
+
+# class Session(models.Model):
+#     account = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='+', on_delete=models.CASCADE)
+#     session_key = models.CharField(max_length=255, db_index=True)
+#     datetime_create = models.DateTimeField(auto_now_add=True, db_index=True)
+#
+#     @staticmethod
+#     def push(account, session_key):
+#         from importlib import import_module
+#         from django.conf import settings
+#         from .caches import cache_account_delete
+#
+#         session = Session.objects.filter(account=account).first()
+#         if session is not None:
+#             if session.session_key != session_key:
+#                 session_store = import_module(settings.SESSION_ENGINE).SessionStore
+#                 s = session_store(session_key=session.session_key)
+#                 s.delete()
+#                 session.session_key = session_key
+#                 session.save()
+#         else:
+#             Session.objects.create(account=account, session_key=session_key)
+#
+#         cache_account_delete(account.id)
+#
+#
+#     @staticmethod
+#     def remove(account_id, session_key=None):
+#         from importlib import import_module
+#         from django.conf import settings
+#         from .caches import cache_account_delete
+#
+#         session_store = import_module(settings.SESSION_ENGINE).SessionStore
+#         if session_key is None:
+#             for session in Session.objects.filter(account_id=account_id):
+#                 _session = session_store(session.session_key)
+#                 _session.delete()
+#                 session.delete()
+#         else:
+#             for session in Session.objects.filter(account_id=account_id, session_key=session_key):
+#                 _session = session_store(session.session_key)
+#                 _session.delete()
+#                 session.delete()
+#         cache_account_delete(account_id)

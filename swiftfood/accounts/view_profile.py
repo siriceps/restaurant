@@ -57,9 +57,9 @@ class AccountManagement(mixins.ListModelMixin, viewsets.GenericViewSet):
                 - code: 200
                   message: ok
         """
-        account = self.get_object()
-        serializer = ProfileUpdateSerializer(account, data=request.data, partial=True)
+        accounts = self.get_object()
+        serializer = ProfileUpdateSerializer(accounts, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        account.cache_delete()
-        return Response(self.get_serializer(account).data)
+        accounts.cache_delete()
+        return Response(self.get_serializer(accounts).data)
