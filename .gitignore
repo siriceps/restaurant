@@ -71,8 +71,6 @@ swiftfood/venv/Lib/site-packages/asgiref/
 
 swiftfood/venv/Lib/site-packages/billiard-3.6.1.0.dist-info/
 
-*.py
-
 swiftfood/venv/Lib/site-packages/celery-4.3.0.dist-info/
 
 *.png
