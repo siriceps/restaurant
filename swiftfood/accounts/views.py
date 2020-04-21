@@ -26,9 +26,9 @@ class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
             return Response({'detail': 'username or password does not exit'}, status=status.HTTP_404_NOT_FOUND)
         # elif account.password != data['password']:
         #     return Response({'detail': 'password is incorrect'}, status=status.HTTP_404_NOT_FOUND)
-
-        login(request, account)
-        return Response({}, status=status.HTTP_201_CREATED)
+        print(account)
+        csrf_token = login(request, account)
+        return Response(csrf_token, status=status.HTTP_201_CREATED)
 
 
 class AccountRegister(mixins.CreateModelMixin, viewsets.GenericViewSet):
