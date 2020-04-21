@@ -25,7 +25,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         fields = ('username', 'first_name', 'last_name', 'email', 'phone', 'point', 'image')
 
 
-class RegisterSerializer(serializers.Serializer):
+class RegisterSerializer(serializers.ModelSerializer):
     username = serializers.CharField(allow_blank=False, required=True)
     password = serializers.CharField(min_length=settings.PASSWORD_MIN)
     confirm_password = serializers.CharField(min_length=settings.PASSWORD_MIN, required=False)
@@ -34,6 +34,18 @@ class RegisterSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
     phone = serializers.CharField(max_length=10, required=True, allow_blank=False)
 
+    class Meta:
+        model = Account
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            # 'image',
+            'password',
+            'confirm_password'
+        )
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(allow_blank=False, required=True)
@@ -71,6 +83,8 @@ class RegisterStaffSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
     last_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
     phone = serializers.CharField(max_length=10, required=True, allow_blank=False)
+    is_staff = serializers.BooleanField(default=True)
+    is_admin = serializers.BooleanField(default=True)
 
     class Meta:
         model = Account
