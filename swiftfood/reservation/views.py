@@ -1,5 +1,5 @@
 from rest_framework import mixins, viewsets, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
 from reservation.models import Reservation
@@ -10,7 +10,7 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Cre
                       mixins.DestroyModelMixin):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     action_serializers = {
         'create': ReservationSerializer,
