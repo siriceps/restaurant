@@ -7,8 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Account
-from .serializer import LoginSerializer, RegisterSerializer, AccountProfileSerializer, AccountRegisterSerializer, \
-    RegisterStaffSerializer
+from .serializer import LoginSerializer, RegisterSerializer, AccountRegisterSerializer, RegisterStaffSerializer
 
 
 class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -85,9 +84,14 @@ class LogoutView(APIView):
 
 
 class RegisterStaff(mixins.CreateModelMixin, viewsets.GenericViewSet):
-    queryset = Account.objects.all()
+    queryset = Account.objects.filter(is_staff=True)
     permission_classes = (AllowAny,)
     serializer_class = RegisterStaffSerializer
+
+    action_serializers = {
+        'create': RegisterStaffSerializer,
+        'list': RegisterStaffSerializer,
+    }
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -109,3 +113,20 @@ class RegisterStaff(mixins.CreateModelMixin, viewsets.GenericViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
+
+    def get_serializer_class(self):
+        if hasattr(self, 'action_serializers'):
+            if self.action in self.action_serializers:
+                return self.action_serializers[self.action]
+        return super().get_serializer_class()
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

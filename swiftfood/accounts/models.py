@@ -172,3 +172,31 @@ class ForgetPassword(models.Model):
 #                 _session.delete()
 #                 session.delete()
 #         cache_account_delete(account_id)
+
+# class StaffAccount(AbstractBaseUser, PermissionsMixin):
+#     first_name = models.CharField(max_length=120, db_index=True, blank=True)
+#     last_name = models.CharField(max_length=120, db_index=True, blank=True)
+#     phone = models.CharField(max_length=64, null=True, blank=True, db_index=True)
+#     image = models.ImageField(upload_to='accounts/%Y/%m/', null=True, blank=True)
+#     is_staff = models.BooleanField(default=False)
+#     is_admin = models.BooleanField(default=False)
+#     position = models.CharField(max_length=64, null=True, blank=True, db_index=True)
+#     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
+#     username = models.CharField(
+#         _('username'),
+#         max_length=150,
+#         unique=True,
+#         help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+#         validators=[username_validator],
+#         error_messages={
+#             'unique': _("A user with that username already exists."),
+#         },
+#     )
+#
+#     email = models.EmailField(
+#         verbose_name='Email address',
+#         max_length=255,
+#         db_index=True,
+#         null=True,
+#         blank=True
+#     )
