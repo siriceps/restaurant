@@ -55,8 +55,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=64, null=True, blank=True, db_index=True)
     image = models.ImageField(upload_to='accounts/%Y/%m/', null=True, blank=True)
     code = models.CharField(max_length=32, db_index=True, blank=True, null=True, default=None)  # Employee id
-    is_staff = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
     position = models.CharField(max_length=64, null=True, blank=True, db_index=True)
     username_validator = UnicodeUsernameValidator() if six.PY3 else ASCIIUsernameValidator()
     username = models.CharField(

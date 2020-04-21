@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Account
-from .serializer import LoginSerializer, RegisterSerializer, AccountProfileSerializer, AccountRegisterSerializer
+from .serializer import LoginSerializer, RegisterSerializer, AccountProfileSerializer, AccountRegisterSerializer, \
+    RegisterStaffSerializer
 
 
 class AccountLogin(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -51,10 +52,13 @@ class AccountRegister(mixins.CreateModelMixin, viewsets.GenericViewSet):
         data.pop('confirm_password')
         data['password'] = make_password(data['password'])
         data['username'] = data['username'].lower()
+        data['is_staff'] = False
+        data['is_staff'] = False
         serializer = AccountRegisterSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-        return Response(serializer.data, status.HTTP_201_CREATED)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
 
 
 class LogoutView(APIView):
@@ -78,3 +82,30 @@ class LogoutView(APIView):
             Session.remove(account_id, session_key)
         finally:
             return Response(status=status.HTTP_200_OK)
+
+
+class RegisterStaff(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    queryset = Account.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterStaffSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+
+        if Account.objects.filter(username=data['username']):
+            return Response({'detail': 'username is exits'}, status=status.HTTP_409_CONFLICT)
+        if Account.objects.filter(email=data['email']):
+            return Response({'detail': 'email is exits'}, status=status.HTTP_409_CONFLICT)
+        if data['password'] != data['confirm_password']:
+            return Response({'detail': 'password is not match'}, status=status.HTTP_404_NOT_FOUND)
+
+        data.pop('confirm_password')
+        data['password'] = make_password(data['password'])
+        data['username'] = data['username'].lower()
+        serializer = AccountRegisterSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
