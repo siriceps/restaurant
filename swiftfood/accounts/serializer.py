@@ -76,15 +76,15 @@ class NoneSerializer(serializers.Serializer):
 
 
 class RegisterStaffSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(allow_blank=False, required=True)
-    password = serializers.CharField(min_length=settings.PASSWORD_MIN)
+    # username = serializers.CharField(allow_blank=False, required=True)
+    # password = serializers.CharField(min_length=settings.PASSWORD_MIN)
     confirm_password = serializers.CharField(min_length=settings.PASSWORD_MIN, required=False)
-    email = serializers.CharField(max_length=255, required=True, allow_blank=False)
-    first_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
-    last_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
-    phone = serializers.CharField(max_length=10, required=True, allow_blank=False)
-    is_staff = serializers.BooleanField(default=True)
-    is_admin = serializers.BooleanField(default=True)
+    # email = serializers.CharField(max_length=255, required=True, allow_blank=False)
+    # first_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
+    # last_name = serializers.CharField(max_length=120, required=True, allow_blank=False)
+    # phone = serializers.CharField(max_length=10, required=True, allow_blank=False)
+    # is_staff = serializers.BooleanField(default=True)
+    # is_admin = serializers.BooleanField(default=True)
 
     class Meta:
         model = Account

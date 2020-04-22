@@ -16,6 +16,12 @@ class OrderMenuView(viewsets.GenericViewSet, mixins.CreateModelMixin):
         'list': OrderListSerializer,
     }
 
+    def get_serializer_class(self):
+        if hasattr(self, 'action_serializers'):
+            if self.action in self.action_serializers:
+                return self.action_serializers[self.action]
+        return super().get_serializer_class()
+
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
@@ -30,18 +36,20 @@ class OrderMenuView(viewsets.GenericViewSet, mixins.CreateModelMixin):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        self.perform_create(serializer)
         my_cart = MyCart.objects.filter(
             is_order=False,
-        ).first()
-        # total = get_food_menu()
-        order = Order.objects.create(
+        )
+        for i in my_cart:
+            i.total = i.food_menu.price * i.quantity
+            i.save()
+        serializer.save(
             my_cart=my_cart,
             datetime_order=data['datetime_order'],
             service_charge=0.1,
             vat=0.07,
-            # total=total,
-            is_paid=data['is_paid']
+            total=i.total,
+            is_paid=True,
+            user=request.user,
         )
         headers = self.get_success_headers(serializer.data)
-        return Response(self.get_serializer(order).data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status.HTTP_201_CREATED, headers=headers)

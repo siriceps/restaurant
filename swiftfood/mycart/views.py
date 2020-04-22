@@ -15,6 +15,12 @@ class MyCartMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Crea
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
 
+    def get_serializer_class(self):
+        if hasattr(self, 'action_serializers'):
+            if self.action in self.action_serializers:
+                return self.action_serializers[self.action]
+        return super().get_serializer_class()
+
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
@@ -29,11 +35,11 @@ class MyCartMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Crea
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        self.perform_create(serializer)
-        my_cart = MyCart.objects.create(
-            food_menu=data['food_menu'],
-            quantity=data['quantity'],
-            user=request.user,
-        )
+        serializer.save(food_menu=data['food_menu'], quantity=data['quantity'], user=request.user, )
+        # my_cart = MyCart.objects.create(
+        #     food_menu=data['food_menu'],
+        #     quantity=data['quantity'],
+        #     user=request.user,
+        # )
         headers = self.get_success_headers(serializer.data)
-        return Response(self.get_serializer(my_cart).data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
