@@ -6,6 +6,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .generator import generate_code
 from .models import Account
 from .serializer import LoginSerializer, RegisterSerializer, AccountRegisterSerializer, RegisterStaffSerializer
 
@@ -108,7 +109,8 @@ class RegisterStaff(mixins.CreateModelMixin, viewsets.GenericViewSet):
         data['username'] = data['username'].lower()
         serializer = AccountRegisterSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(is_staff=True, is_admin=True)
+        code = generate_code(4)
+        serializer.save(is_staff=True, is_admin=True, code=code)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
 

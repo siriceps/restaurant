@@ -95,6 +95,8 @@ class RegisterStaffSerializer(serializers.ModelSerializer):
             'email',
             'phone',
             # 'image',
+            'code',
+            'position',
             'is_staff',
             'is_admin',
             'password',
