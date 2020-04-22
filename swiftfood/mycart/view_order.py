@@ -48,7 +48,6 @@ class OrderMenuView(viewsets.GenericViewSet, mixins.CreateModelMixin):
             service_charge=0.1,
             vat=0.07,
             total=i.total,
-            is_paid=True,
             user=request.user,
         )
         headers = self.get_success_headers(serializer.data)

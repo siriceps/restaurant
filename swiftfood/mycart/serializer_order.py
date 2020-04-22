@@ -52,7 +52,6 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             'id',
             'my_cart',
             'datetime_order',
-            'is_paid',
             'service_charge',
             'vat',
             'total',

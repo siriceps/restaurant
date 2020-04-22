@@ -12,11 +12,11 @@ from .models import Account, ForgetPassword
 class AccountAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'code',
         'username',
         'email',
         'first_name',
         'last_name',
+        'code',
         'phone',
         'image',
 
