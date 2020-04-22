@@ -107,10 +107,11 @@ class RegisterStaff(mixins.CreateModelMixin, viewsets.GenericViewSet):
         data.pop('confirm_password')
         data['password'] = make_password(data['password'])
         data['username'] = data['username'].lower()
+
         serializer = AccountRegisterSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         code = generate_code(4)
-        serializer.save(is_staff=True, is_admin=True, code=code)
+        serializer.save(is_staff=True, is_admin=True, code=code, position=data['position'])
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status.HTTP_201_CREATED, headers=headers)
 
