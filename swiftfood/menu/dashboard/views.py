@@ -19,12 +19,6 @@ class MenuManagementAdmin(mixins.ListModelMixin, viewsets.GenericViewSet):
         'create': MenuCreateSerializerAdmin,
     }
 
-    permission_classes_action = {
-        'list': [IsAuthenticated],
-        'profile_patch': [IsAuthenticated],
-        'create': [IsAuthenticated],
-    }
-
     # def get_permissions(self):
     #     try:
     #         return [permission() for permission in self.permission_classes_action[self.action]]
@@ -52,18 +46,6 @@ class MenuManagementAdmin(mixins.ListModelMixin, viewsets.GenericViewSet):
         return Response(result)
 
     def profile_patch(self, request, *args, **kwargs):
-        """
-            Update Profile
-            ---
-            Parameters:
-                - first_name: string
-                - last_name: string
-                - image: string
-                - language: string
-            Response Message:
-                - code: 200
-                  message: ok
-        """
         menu = self.get_object()
         serializer = MenuUpdateSerializer(menu, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -82,11 +64,6 @@ class MenuManagementAdmin(mixins.ListModelMixin, viewsets.GenericViewSet):
 class MenuView(viewsets.ModelViewSet):
     queryset = Menu.objects.all().order_by('categories')
     serializer_class = MenuSerializer
-    #
-    #     # staff = Account.objects.filter('id', 'is_admin', 'is_staff').all()
-    #     # if staff is True:
-    #     #     check = staff
-    permission_classes = [IsAuthenticated, ]
 
     action_serializers = {
         'create': MenuSerializer,

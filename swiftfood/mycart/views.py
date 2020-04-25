@@ -3,17 +3,21 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from .models import MyCart, Order
-from .serializer import MyCartListSerializer
+from .serializer import MyCartListSerializer, MyCartSerializer
 from .serializer_order import OrderCreateSerializer, OrderListSerializer
 
 
 class MyCartMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin):
     queryset = MyCart.objects.all()
     permission_classes = (AllowAny,)
-    serializer_class = MyCartListSerializer
+    serializer_class = MyCartSerializer
+    action_serializers = {
+        'create': MyCartSerializer,
+        'list': MyCartListSerializer,
+    }
 
-    def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+    # def get_queryset(self):
+    #     return self.queryset.filter(user=self.request.user)
 
     def get_serializer_class(self):
         if hasattr(self, 'action_serializers'):
@@ -35,8 +39,8 @@ class MyCartMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Crea
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        MyCart.objects.filter('food_menu')
-        serializer.save(user=request.user)
+        # MyCart.objects.filter('food_menu')
+        serializer.save()
         # my_cart = MyCart.objects.create(
         #     food_menu=data['food_menu'],
         #     quantity=data['quantity'],

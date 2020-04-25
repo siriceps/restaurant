@@ -26,7 +26,7 @@ class SerializerFood(serializers.ModelSerializer):
 
 
 class MyCartListSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
+    # user = serializers.SerializerMethodField()
     food_menu = serializers.SerializerMethodField()
 
     class Meta:
@@ -36,13 +36,32 @@ class MyCartListSerializer(serializers.ModelSerializer):
             'food_menu',
             'quantity',
             'datetime_create',
-            'user',
+            # 'user',
             # 'order',
 
         )
 
-    def get_user(self, mycart):
-        return SerializerUser(mycart.user).data
+    # def get_user(self, mycart):
+    #     return SerializerUser(mycart.user).data
 
     def get_food_menu(self, mycart):
         return SerializerFood(mycart.food_menu).data
+
+
+class MyCartSerializer(serializers.ModelSerializer):
+    # user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MyCart
+        fields = (
+            'id',
+            'food_menu',
+            'quantity',
+            'datetime_create',
+            # 'user',
+            # 'order',
+
+        )
+
+    # def get_user(self, mycart):
+    #     return SerializerUser(mycart.user).data

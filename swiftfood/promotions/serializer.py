@@ -33,3 +33,18 @@ class PromotionsListSerializer(serializers.ModelSerializer):
 
     def get_promotion_menu(self, promotions):
         return SerializerFood(promotions.promotion_menu).data
+
+
+class PromotionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Promotions
+        fields = (
+            'id',
+            'promotion_name',
+            'promotion_code',
+            'promotion_picture',
+            'description',
+            'discount',
+            'promotion_menu',
+            'datetime_exp'
+        )
