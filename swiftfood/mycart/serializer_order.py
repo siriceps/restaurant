@@ -44,7 +44,7 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 
 class OrderCreateSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
+    # user = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
@@ -58,8 +58,8 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             'user',
         )
 
-    def get_user(self, order):
-        return SerializerUser(order.user).data
+    # def get_user(self, order):
+    #     return SerializerUser(order.user).data
 
     # def get_vat(self):
     #     vat = 7 / 100

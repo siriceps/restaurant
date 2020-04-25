@@ -43,7 +43,8 @@ class MyCart(models.Model):
 
 
 class Order(models.Model):
-    my_cart = models.ManyToManyField(MyCart)
+    my_cart = models.ManyToManyField(MyCart, null=True, blank=True)
+    # my_cart = models.ForeignKey(MyCart, null=True, on_delete=models.CASCADE)
     datetime_order = models.DateTimeField(default=datetime.now, blank=True, editable=False)
     service_charge = models.FloatField(default=0)
     vat = models.FloatField(default=0)

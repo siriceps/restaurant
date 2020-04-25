@@ -39,16 +39,28 @@ class OrderMenuView(viewsets.GenericViewSet, mixins.CreateModelMixin):
         my_cart = MyCart.objects.filter(
             is_order=False,
         )
+        # data['my_cart'] = my_cart
+        total = 0
         for i in my_cart:
             i.total = i.food_menu.price * i.quantity
+            total += i.total
+            # i.food_menu.material.quantity_material -= i.food_menu.material_quantity * i.quantity
             i.save()
-        serializer.save(
-            my_cart=my_cart,
-            datetime_order=data['datetime_order'],
-            service_charge=0.1,
-            vat=0.07,
-            total=i.total,
-            user=request.user,
-        )
+
+        # serializer.save(my_cart=data['my_cart'], service_charge=0.1, vat=0.07, user=request.user)
+        order = Order(service_charge=data['service_charge'], total=total, user=request.user)
+        # for i in data['my_cart']:
+            # print(i.id)
+        order.my_cart.add(MyCart.objects.filter(id=31).first())
+
+        # order.save()
+        print(data)
+
+        # Order.objects.create(
+        #     # my_cart=,
+        #     service_charge=data['service_charge'],
+        #     total=total,
+        #     user=request.user
+        # ).save()
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status.HTTP_201_CREATED, headers=headers)

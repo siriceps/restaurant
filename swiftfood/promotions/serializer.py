@@ -9,10 +9,10 @@ class PromotionsListSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'promotion_name',
-            # 'promotion_code',
-            'promotion_picture',
+            'promotion_code',
+            # 'promotion_picture',
             'description',
             'discount',
-            'promotion_order',
+            'promotion_menu',
             'datetime_exp'
         )

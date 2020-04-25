@@ -4,8 +4,10 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.static import serve
 from rest_framework_swagger.views import get_swagger_view
+from django.views.decorators.csrf import csrf_exempt
 
 from accounts.view_forget_password import ConfirmPassword
+from reservation.views import ReservationView
 
 urlpatterns_api_user = [
     path('api/accounts/', include('accounts.urls')),
@@ -37,7 +39,7 @@ urlpatterns_swagger = [
 ]
 
 urlpatterns = [
-
+    # url(r'^reservation/$', csrf_exempt(ReservationView)),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     url(r'^api-auth', include('rest_framework.urls')),

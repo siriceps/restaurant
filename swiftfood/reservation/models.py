@@ -11,9 +11,12 @@ class Reservation(models.Model):
     queue = models.IntegerField(default=1, )
     is_confirm = models.BooleanField(default=False)
     datetime = models.DateTimeField(default=datetime.now, blank=True, editable=False)
-    count = models.SmallIntegerField(default=1)  # for call queue
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
 
     @staticmethod
     def is_user_exists(user):
         return Reservation.objects.filter(user=user).exists()
+
+    @staticmethod
+    def count():
+        return Reservation.objects.count()

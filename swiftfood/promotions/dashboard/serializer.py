@@ -16,7 +16,7 @@ class PromotionsSerializer(serializers.ModelSerializer):
             # 'promotion_picture',
             'description',
             'discount',
-            'promotion_order',
+            # 'promotion_order',
         )
 
     # def get_promotion_code(self):

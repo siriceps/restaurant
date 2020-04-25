@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework import routers
 
 from accounts.view_change_password import ChangePasswordViewSet
-from accounts.view_forget_password import ForgetPasswordView
+from accounts.view_forget_password import ForgetPasswordView, return_template
 from accounts.view_profile import AccountManagement
 from .views import AccountLogin, AccountRegister, LogoutView, RegisterStaff
 
@@ -18,6 +18,7 @@ router.register(r'accounviewprofile', AccountManagement)
 urlpatterns = [
 
     path('logout/', LogoutView.as_view()),
+    path('return_template/', return_template),
 
 ]
 

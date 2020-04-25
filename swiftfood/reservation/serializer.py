@@ -26,14 +26,15 @@ class ReservationListSerializer(serializers.ModelSerializer):
 class ReservationSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
     # queue = serializers.SerializerMethodField()
+    # count = serializers.IntegerField(min_value=1)
 
     class Meta:
         model = Reservation
         fields = (
             'id',
-            'queue',
             'quantity',
             'user',
+            # 'count',
         )
 
     def get_user(self, reservations):

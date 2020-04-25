@@ -1,9 +1,10 @@
 from rest_framework import mixins, viewsets, status
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import mixins, viewsets, status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from reservation.models import Reservation
-from reservation.serializer import ReservationDestroy, ReservationSerializer, ReservationListSerializer
+from reservation.serializer import ReservationSerializer, ReservationListSerializer
 
 
 class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin,
@@ -37,14 +38,22 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Cre
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        self.perform_create(serializer)
-        reservation = Reservation.objects.filter(
-            quantity=data['quantity'],
-            user=request.user
-        ).first()
-
+        serializer.save(queue=Reservation.count(), user=request.user)
         headers = self.get_success_headers(serializer.data)
-        return Response(self.get_serializer(reservation).data, status=status.HTTP_201_CREATED, headers=headers)
+        # return Response(self.get_serializer(reservation).data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     data = serializer.validated_data
+    #     self.perform_create(serializer)
+    #     reservation = Reservation.objects.filter(
+    #         quantity=data['quantity'],
+    #         user=request.user
+    #     ).first()
+    #     headers = self.get_success_headers(serializer.data)
+    #     return Response(self.get_serializer(reservation).data, status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
@@ -52,17 +61,8 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Cre
     def destroy(self, request, *args, **kwargs):
         reservation = self.get_object()
         self.perform_destroy(reservation)
+        reser = Reservation.objects.filter(queue__gte=reservation.queue)
+        for i in reser:
+            i.queue -= 1
+            i.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     data = serializer.validated_data
-    #     Reservation.objects.create(
-    #         queue=data['queue'],
-    #         quantity=data['quantity'],
-    #         datetime=data['datetime'],
-    #         is_confirm=data['is_confirm'],
-    #     )
-    #     # headers = self.get_success_headers(serializer.data)
-    #     return Response(data, status=status.HTTP_201_CREATED)

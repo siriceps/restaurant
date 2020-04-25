@@ -32,7 +32,7 @@ class PromotionsViewAdmin(viewsets.ModelViewSet):
             Promotions.objects.create(code=code).save()
         finally:
             headers = self.get_success_headers(serializer.data)
-            return Response(data, status=status.HTTP_201_CREATED,headers=headers)
+            return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
     #     return Response(data, status=status.HTTP_201_CREATED, headers=headers)
     # def list(self, request, *args, **kwargs):

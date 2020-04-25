@@ -7,7 +7,7 @@ router = DefaultRouter()
 router.register(r'reservation', ReservationView)
 
 urlpatterns = [
-
+    # url(r'^reservation/$', csrf_exempt(ReservationView)),
     path('', include(router.urls)),
 
 ]

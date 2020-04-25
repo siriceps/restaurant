@@ -15,8 +15,8 @@ class Menu(models.Model):
     description = models.CharField(max_length=50, db_index=True, blank=True)
     is_display = models.BooleanField(default=True)
     # user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
-    material = models.ManyToManyField(Stock)
-
+    material = models.ForeignKey(Stock, null=True, on_delete=models.CASCADE)
+    material_quantity = models.IntegerField(default=0)
     # @staticmethod
     # def is_user_exists(user):
     #     return Menu.objects.filter(user=user).exists()
