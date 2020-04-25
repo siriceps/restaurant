@@ -10,7 +10,7 @@ class PromotionsListSerializer(serializers.ModelSerializer):
             'id',
             'promotion_name',
             'promotion_code',
-            # 'promotion_picture',
+            'promotion_picture',
             'description',
             'discount',
             'promotion_menu',
