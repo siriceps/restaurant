@@ -35,7 +35,8 @@ class MyCartMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Crea
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        serializer.save(food_menu=data['food_menu'], quantity=data['quantity'], user=request.user, )
+        MyCart.objects.filter('food_menu')
+        serializer.save(user=request.user)
         # my_cart = MyCart.objects.create(
         #     food_menu=data['food_menu'],
         #     quantity=data['quantity'],

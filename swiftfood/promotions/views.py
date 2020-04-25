@@ -38,13 +38,7 @@ class PromotionsView(viewsets.ModelViewSet):
         # serializer = PromotionsListSerializer
 
         serializer.save(
-            # promotion_name=data['promotion_name'],
             promotion_code=code,
-            # promotion_picture data['promotion_picture'],
-            # description=data['description'],
-            # discount=data['discount'],
-            # promotion_menu=data['promotion_menu']
-            # datetime_exp=data['datetime_exp']
         )
 
         headers = self.get_success_headers(serializer.data)
