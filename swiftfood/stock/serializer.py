@@ -10,7 +10,7 @@ class StockListSerializer(serializers.ModelSerializer):
             'id',
             'material_name',
             'quantity_material',
-            # 'material_picture',
+            'material_picture',
         )
 
 
