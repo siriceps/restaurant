@@ -38,7 +38,8 @@ class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Cre
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        serializer.save(queue=Reservation.count(), user=request.user)
+        serializer.save(queue=Reservation.count())
+        # serializer.save(queue=Reservation.count(), user=request.user)
         headers = self.get_success_headers(serializer.data)
         # return Response(self.get_serializer(reservation).data, status=status.HTTP_201_CREATED, headers=headers)
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)

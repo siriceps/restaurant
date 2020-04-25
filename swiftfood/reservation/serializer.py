@@ -24,7 +24,7 @@ class ReservationListSerializer(serializers.ModelSerializer):
 
 
 class ReservationSerializer(serializers.ModelSerializer):
-    user = serializers.SerializerMethodField()
+    # user = serializers.SerializerMethodField()
     # queue = serializers.SerializerMethodField()
     # count = serializers.IntegerField(min_value=1)
 
@@ -33,12 +33,12 @@ class ReservationSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'quantity',
-            'user',
+            # 'user',
             # 'count',
         )
 
-    def get_user(self, reservations):
-        return SerializerUser(reservations.user).data
+    # def get_user(self, reservations):
+    #     return SerializerUser(reservations.user).data
 
     # def get_queue(self):
     #     queue = 0
