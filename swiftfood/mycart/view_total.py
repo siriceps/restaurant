@@ -20,8 +20,9 @@ class OrderTestView(viewsets.GenericViewSet, mixins.CreateModelMixin):
         if not my_cart:
             my_cart = MyCartTest.objects.create()
         order.my_cart = my_cart
-
+        order.food_menu.material.quantity_material -= order.food_menu.material_quantity * order.quantity
         order.save()
+        order.food_menu.material.save()
         my_cart.update_total_price()
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

@@ -1,3 +1,4 @@
+from django.db.models import Count, Sum
 from rest_framework import serializers
 
 from accounts.models import Account
@@ -15,6 +16,8 @@ class SerializerUser(serializers.ModelSerializer):
 
 
 class SerializerFood(serializers.ModelSerializer):
+    menu_image = serializers.SerializerMethodField
+
     class Meta:
         model = Menu
         fields = (
@@ -23,6 +26,9 @@ class SerializerFood(serializers.ModelSerializer):
             'price',
             'menu_image',
         )
+
+    def get_menu_image(self, menu):
+        return menu.menu_image.urls
 
 
 class MyCartListSerializer(serializers.ModelSerializer):
@@ -114,6 +120,7 @@ class MyCartTestOrderSerializer(serializers.ModelSerializer):
     # user = serializers.SerializerMethodField()
     total_price = serializers.SerializerMethodField()
     order_list = serializers.SerializerMethodField()
+    count_order = serializers.SerializerMethodField()
 
     class Meta:
         model = MyCartTest
@@ -121,6 +128,7 @@ class MyCartTestOrderSerializer(serializers.ModelSerializer):
             'id',
             'total_price',
             'order_list',
+            'count_order',
         )
 
     def get_order_list(self, mycarttest):
@@ -129,3 +137,6 @@ class MyCartTestOrderSerializer(serializers.ModelSerializer):
 
     def get_total_price(self, mycarttest):
         return mycarttest.total_price * 1.07
+
+    def get_count_order(self, mycarttest):
+        return OrderTest.objects.filter(my_cart=mycarttest).aggregate(Sum('quantity'))['quantity__sum']
