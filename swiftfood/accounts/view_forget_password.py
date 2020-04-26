@@ -56,6 +56,8 @@ class ConfirmPassword(APIView):
         return HttpResponse("return this string")
 
     def post(self, request, *args, **kwargs):
+        import pdb
+        pdb.set_trace()
         user = ForgetPassword.objects.filter(token=request.session['token']).first()
         password = request.data['password']
         confirm_password = request.data['confirm_password']

@@ -120,13 +120,13 @@ class ForgetPassword(models.Model):
     account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
-# class Token(models.Model):
-#     account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+')
-#     token = models.CharField(max_length=100, blank=True, unique=True)
-#     datetime_create = models.DateField(auto_now_add=True, db_index=True)
-#
-#     class Meta:
-#         ordering = ['-datetime_create']
+class Token(models.Model):
+    account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='+')
+    token = models.CharField(max_length=100, blank=True, unique=True)
+    datetime_create = models.DateField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ['-datetime_create']
 
 
 # class Session(models.Model):

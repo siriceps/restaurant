@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from accounts.models import Account
 from menu.models import Menu
-from mycart.models import MyCart, Order
+from mycart.models import MyCart, Order, OrderTest, MyCartTest
 
 
 class SerializerUser(serializers.ModelSerializer):
@@ -65,3 +65,67 @@ class MyCartSerializer(serializers.ModelSerializer):
 
     # def get_user(self, mycart):
     #     return SerializerUser(mycart.user).data
+
+
+class MyCartTestSerializer(serializers.ModelSerializer):
+    # user = serializers.SerializerMethodField()
+    total_price = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MyCartTest
+        fields = (
+            'id',
+            'total_price',
+        )
+
+    def get_total_price(self, mycarttest):
+        return mycarttest.total_price * 1.07
+
+
+class OrderTestSerializer(serializers.ModelSerializer):
+    # user = serializers.SerializerMethodField()
+    food_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = OrderTest
+        fields = (
+            'id',
+            'food_name',
+            'quantity',
+            'price',
+        )
+
+    def get_food_name(self, ordertest):
+        return ordertest.food_menu.menu_name
+
+
+class OrderTestCreateSerializer(serializers.ModelSerializer):
+    # user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = OrderTest
+        fields = (
+            'food_menu',
+            'quantity',
+        )
+
+
+class MyCartTestOrderSerializer(serializers.ModelSerializer):
+    # user = serializers.SerializerMethodField()
+    total_price = serializers.SerializerMethodField()
+    order_list = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MyCartTest
+        fields = (
+            'id',
+            'total_price',
+            'order_list',
+        )
+
+    def get_order_list(self, mycarttest):
+        order = OrderTest.objects.filter(my_cart=mycarttest)
+        return OrderTestSerializer(order, many=True).data
+
+    def get_total_price(self, mycarttest):
+        return mycarttest.total_price * 1.07

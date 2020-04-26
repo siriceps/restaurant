@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from accounts.models import Account
-from mycart.models import Order
+from mycart.models import Order, MyCart
 
 
 class SerializerUser(serializers.ModelSerializer):
@@ -15,9 +15,7 @@ class SerializerUser(serializers.ModelSerializer):
 
 class OrderListSerializer(serializers.ModelSerializer):
     # vat = serializers.SerializerMethodField()
-    user = serializers.SerializerMethodField()
-
-    # mycart_list = serializers.SerializerMethodField()
+    # user = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
@@ -29,22 +27,22 @@ class OrderListSerializer(serializers.ModelSerializer):
             'service_charge',
             'vat',
             'total',
-            'user',
+            # 'user',
         )
 
-    def get_user(self, order):
-        return SerializerUser(order.user).data
+    # def get_user(self, order):
+    #     return SerializerUser(order.user).data
 
     # def get_vat(self):
     #     vat = 7 / 100
     #     return vat
 
-    # def get_mycart_list(self, order):
-    #     return MyCartListSerializer(order.get_mycart_list(), many=True).data
-
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     # user = serializers.SerializerMethodField()
+    # service_charge = serializers.SerializerMethodField()
+    # vat = serializers.SerializerMethodField()
+    my_cart = serializers.SerializerMethodField()
 
     class Meta:
         model = Order
@@ -55,15 +53,20 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             'service_charge',
             'vat',
             'total',
-            'user',
+            # 'user',
         )
 
+    def get_my_cart(self):
+        return MyCart.objects.filter(
+            is_order=False,
+        )
     # def get_user(self, order):
     #     return SerializerUser(order.user).data
 
     # def get_vat(self):
     #     vat = 7 / 100
     #     return vat
+
     #
     # def get_total(self):
     #     return None

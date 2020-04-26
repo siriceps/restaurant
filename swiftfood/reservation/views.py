@@ -9,7 +9,7 @@ from reservation.serializer import ReservationSerializer, ReservationListSeriali
 
 class ReservationView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.CreateModelMixin,
                       mixins.DestroyModelMixin):
-    queryset = Reservation.objects.all()
+    queryset = Reservation.objects.all().order_by('datetime')
     serializer_class = ReservationSerializer
     permission_classes = (AllowAny,)
 

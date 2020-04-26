@@ -17,6 +17,8 @@ class MyCart(models.Model):
     is_order = models.BooleanField(default=False)
     total = models.FloatField(default=0)
 
+    # total_all = models.FloatField(default=0)
+
     class Meta:
         ordering = ['datetime_create']
 
@@ -24,16 +26,6 @@ class MyCart(models.Model):
     def is_user_exists(user):
         return MyCart.objects.filter(user=user).exists()
 
-    @staticmethod
-    def pull(id):
-        try:
-            my_cart = MyCart.objects.get(id=id)
-        except:
-            my_cart = None
-        return my_cart
-
-    # def get_order_list(self):
-    #     return self.order_set.all()
     @property
     def get_food_menu(self):
         total = 0
@@ -66,3 +58,34 @@ class Order(models.Model):
         except:
             order = None
         return order
+
+
+class MyCartTest(models.Model):
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+    total_price = models.FloatField(default=0)
+    datetime_create = models.DateTimeField(default=datetime.now, blank=True, editable=False)
+    datetime_update = models.DateTimeField(default=datetime.now, blank=True, editable=False)
+    is_confirm = models.BooleanField(default=False)
+
+    @staticmethod
+    def is_user_exists(user):
+        return Order.objects.filter(user=user).exists()
+
+    def update_total_price(self):
+        order_list = OrderTest.objects.filter(my_cart=self)
+        total_price = 0
+        for order in order_list:
+            total_price += order.price
+        self.total_price = total_price
+        self.save()
+
+
+class OrderTest(models.Model):
+    food_menu = models.ForeignKey(Menu, null=True, on_delete=models.CASCADE)
+    my_cart = models.ForeignKey(MyCartTest, null=True, on_delete=models.CASCADE)
+    datetime_create = models.DateTimeField(default=datetime.now, blank=True, editable=False)
+    quantity = models.IntegerField(default=1)
+
+    @property
+    def price(self):
+        return self.food_menu.price * self.quantity

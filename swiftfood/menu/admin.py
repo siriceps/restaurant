@@ -13,5 +13,6 @@ class MenuAdmin(admin.ModelAdmin):
         'menu_image',
         'discount_price',
         'description',
-        'is_display'
+        'is_display',
+        'material_quantity',
     )

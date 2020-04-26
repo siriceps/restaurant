@@ -6,7 +6,7 @@ from .serializer_order import OrderCreateSerializer, OrderListSerializer
 
 
 class OrderMenuView(viewsets.GenericViewSet, mixins.CreateModelMixin):
-    queryset = Order.objects.all()
+    queryset = Order.objects.all().order_by('datetime_order')
     serializer_class = OrderCreateSerializer
 
     lookup_field = 'id'
@@ -39,23 +39,35 @@ class OrderMenuView(viewsets.GenericViewSet, mixins.CreateModelMixin):
         my_cart = MyCart.objects.filter(
             is_order=False,
         )
-        # data['my_cart'] = my_cart
+        # print(my_cart)
+        # import pdb
+        # pdb.set_trace()
         total = 0
+        # data.pop('my_cart')
         for i in my_cart:
             i.total = i.food_menu.price * i.quantity
             total += i.total
-            # i.food_menu.material.quantity_material -= i.food_menu.material_quantity * i.quantity
             i.save()
+        total = total * 0.7
+            # i.food_menu.material.quantity_material -= i.food_menu.material_quantity * i.quantity
+            # order.my_cart.add(i.id)
 
-        # serializer.save(my_cart=data['my_cart'], service_charge=0.1, vat=0.07, user=request.user)
-        order = Order(service_charge=data['service_charge'], total=total, user=request.user)
-        # for i in data['my_cart']:
-            # print(i.id)
-        order.my_cart.add(MyCart.objects.filter(id=31).first())
-
+        order = Order(total=total)
+        order.save()
+        self.perform_create(serializer)
+        # serializer.save(my_cart=my_cart, total=total)
         # order.save()
-        print(data)
+        # print(MyCart.objects.filter(id=57).first())
+        # serializer.save(total=total, my_cart=my_cart)
 
+        # order = serializer.save(service_charge=data['service_charge'], total=total)
+        # for i in my_cart:
+        #     print(i.id)
+        # print(MyCart.objects.filter(id=35).first())
+
+        # order.my_cart.add(my_cart)
+        # order.my_cart.set(i.id)
+        # order.save()
         # Order.objects.create(
         #     # my_cart=,
         #     service_charge=data['service_charge'],
