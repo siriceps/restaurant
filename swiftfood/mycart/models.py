@@ -9,15 +9,10 @@ from django.conf import settings
 class MyCart(models.Model):
     food_menu = models.ForeignKey(Menu, null=True, on_delete=models.CASCADE)
     quantity = models.SmallIntegerField(default=1)
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
-
-    # order = models.ForeignKey(Order, on_delete=models.CASCADE)
     datetime_create = models.DateTimeField(default=datetime.now, blank=True, editable=False)
     is_order = models.BooleanField(default=False)
     total = models.FloatField(default=0)
-
-    # total_all = models.FloatField(default=0)
 
     class Meta:
         ordering = ['datetime_create']
@@ -26,17 +21,9 @@ class MyCart(models.Model):
     def is_user_exists(user):
         return MyCart.objects.filter(user=user).exists()
 
-    @property
-    def get_food_menu(self):
-        total = 0
-        for i in self.food_menu:
-            total += i.price
-        return total
-
 
 class Order(models.Model):
-    my_cart = models.ManyToManyField(MyCart, null=True, blank=True)
-    # my_cart = models.ForeignKey(MyCart, null=True, on_delete=models.CASCADE)
+    my_cart = models.ManyToManyField(MyCart)
     datetime_order = models.DateTimeField(default=datetime.now, blank=True, editable=False)
     service_charge = models.FloatField(default=0)
     vat = models.FloatField(default=0)

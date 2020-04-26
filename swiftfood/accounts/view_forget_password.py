@@ -23,7 +23,6 @@ class ForgetPasswordView(mixins.CreateModelMixin, viewsets.GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        # token = 'qweqweqweqweqwe'
         token = generate_token(64)
         try:
             forget = ForgetPassword.objects.create(account=Account.objects.filter(email=data['email']).first(),

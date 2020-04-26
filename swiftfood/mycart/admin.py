@@ -10,7 +10,6 @@ class MyCartAdmin(admin.ModelAdmin):
         'id',
         'food_menu',
         'quantity',
-        # 'order',
         'datetime_create',
         'user',
     )

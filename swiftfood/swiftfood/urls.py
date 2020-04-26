@@ -44,7 +44,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api-auth', include('rest_framework.urls')),
     url(r'setpassword/$', ConfirmPassword.as_view()),
-    url(r'forgetpassword/$', ConfirmPassword.as_view()),
+    # url(r'forgetpassword/$', ConfirmPassword.as_view()),
     path('return_template/', return_template),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 

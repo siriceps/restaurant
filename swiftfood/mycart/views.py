@@ -16,9 +16,6 @@ class MyCartMenuView(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.Crea
         'list': MyCartListSerializer,
     }
 
-    # def get_queryset(self):
-    #     return self.queryset.filter(user=self.request.user)
-
     def get_serializer_class(self):
         if hasattr(self, 'action_serializers'):
             if self.action in self.action_serializers:

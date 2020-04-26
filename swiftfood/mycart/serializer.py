@@ -1,9 +1,9 @@
-from django.db.models import Count, Sum
+from django.db.models import Sum
 from rest_framework import serializers
 
 from accounts.models import Account
 from menu.models import Menu
-from mycart.models import MyCart, Order, OrderTest, MyCartTest
+from mycart.models import MyCart, OrderTest, MyCartTest
 
 
 class SerializerUser(serializers.ModelSerializer):
@@ -16,8 +16,6 @@ class SerializerUser(serializers.ModelSerializer):
 
 
 class SerializerFood(serializers.ModelSerializer):
-    menu_image = serializers.SerializerMethodField
-
     class Meta:
         model = Menu
         fields = (
@@ -26,9 +24,6 @@ class SerializerFood(serializers.ModelSerializer):
             'price',
             'menu_image',
         )
-
-    def get_menu_image(self, menu):
-        return menu.menu_image.urls
 
 
 class MyCartListSerializer(serializers.ModelSerializer):
@@ -43,7 +38,6 @@ class MyCartListSerializer(serializers.ModelSerializer):
             'quantity',
             'datetime_create',
             # 'user',
-            # 'order',
 
         )
 
@@ -65,7 +59,6 @@ class MyCartSerializer(serializers.ModelSerializer):
             'quantity',
             'datetime_create',
             # 'user',
-            # 'order',
 
         )
 
