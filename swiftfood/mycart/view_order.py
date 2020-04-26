@@ -1,11 +1,11 @@
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 
-from .models import MyCart, Order
+from .models import Order
 from .serializer_order import OrderCreateSerializer, OrderListSerializer
 
 
-class OrderMenuView(viewsets.GenericViewSet, mixins.CreateModelMixin):
+class OrderMenuView(viewsets.GenericViewSet, mixins.ListModelMixin):
     queryset = Order.objects.all().order_by('datetime_order')
     serializer_class = OrderCreateSerializer
 
@@ -32,29 +32,29 @@ class OrderMenuView(viewsets.GenericViewSet, mixins.CreateModelMixin):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        data = serializer.validated_data
-        my_cart = MyCart.objects.filter(
-            is_order=False,
-        )
+        # def create(self, request, *args, **kwargs):
+        #     serializer = self.get_serializer(data=request.data)
+        #     serializer.is_valid(raise_exception=True)
+        #     data = serializer.validated_data
+        #     my_cart = MyCart.objects.filter(
+        #         is_order=False,
+        #     )
         # print(my_cart)
         # import pdb
         # pdb.set_trace()
-        total = 0
+        # total = 0
         # data.pop('my_cart')
-        for i in my_cart:
-            i.total = i.food_menu.price * i.quantity
-            total += i.total
-            i.save()
-        total = total * 0.7
-            # i.food_menu.material.quantity_material -= i.food_menu.material_quantity * i.quantity
-            # order.my_cart.add(i.id)
+        # for i in my_cart:
+        #     i.total = i.food_menu.price * i.quantity
+        #     total += i.total
+        #     i.save()
+        # total = total * 0.7
+        # i.food_menu.material.quantity_material -= i.food_menu.material_quantity * i.quantity
+        # order.my_cart.add(i.id)
 
-        order = Order(total=total)
-        order.save()
-        self.perform_create(serializer)
+        # order = Order(total=total)
+        # order.save()
+        # self.perform_create(serializer)
         # serializer.save(my_cart=my_cart, total=total)
         # order.save()
         # print(MyCart.objects.filter(id=57).first())

@@ -178,8 +178,6 @@ LANGUAGES = (
 
 TIME_ZONE = 'UTC'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 USE_I18N = True
 
 USE_L10N = True
@@ -189,19 +187,25 @@ PASSWORD_MIN = 8
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+SITE_URL = 'http://127.0.0.1:8000/'
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = SITE_URL + 'media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'deploy_static/')
+ADMIN = [
+    ('sirice39ps7@gmail.com',
 
+     ),
+]
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'sir_ice39@outlook.com'
-# EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
 EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'sirice39ps7@gmail.com'
+EMAIL_HOST_PASSWORD = 'CT62WFQW'
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True

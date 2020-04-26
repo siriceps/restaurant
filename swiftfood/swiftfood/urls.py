@@ -6,7 +6,7 @@ from django.views.static import serve
 from rest_framework_swagger.views import get_swagger_view
 from django.views.decorators.csrf import csrf_exempt
 
-from accounts.view_forget_password import ConfirmPassword
+from accounts.view_forget_password import ConfirmPassword, return_template
 from reservation.views import ReservationView
 
 urlpatterns_api_user = [
@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^api-auth', include('rest_framework.urls')),
     url(r'setpassword/$', ConfirmPassword.as_view()),
     url(r'forgetpassword/$', ConfirmPassword.as_view()),
+    path('return_template/', return_template),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 
 ]

@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from accounts.generator import generate_token
 from accounts.models import Account, ForgetPassword
 from accounts.serializer import ForgetPasswordSerializer
+from swiftfood.settings import EMAIL_HOST_USER
 
 
 class ForgetPasswordView(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -26,11 +27,12 @@ class ForgetPasswordView(mixins.CreateModelMixin, viewsets.GenericViewSet):
         token = generate_token(64)
         try:
             forget = ForgetPassword.objects.create(account=Account.objects.filter(email=data['email']).first(),
-                                                   token=token).save()
-            link = str(request.get_host()) + '/?token=' + token
+                                                   token=token)
+            link = str(request.get_host()) + '/return_template/' + '/?token=' + token
 
-            # TODO Send mail to user
-            send_mail(link, 'sir_ice39@outlook.com', forget.data['email'], fail_silently=False)
+            print(forget.account.email)
+            send_mail('reset password ', link, EMAIL_HOST_USER, [forget.account.email], fail_silently=False)
+
         finally:
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -56,8 +58,6 @@ class ConfirmPassword(APIView):
         return HttpResponse("return this string")
 
     def post(self, request, *args, **kwargs):
-        import pdb
-        pdb.set_trace()
         user = ForgetPassword.objects.filter(token=request.session['token']).first()
         password = request.data['password']
         confirm_password = request.data['confirm_password']
